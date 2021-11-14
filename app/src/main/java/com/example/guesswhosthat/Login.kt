@@ -1,11 +1,14 @@
 package com.example.guesswhosthat
 
+import android.app.appsearch.AppSearchSession
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.guesswhosthat.Session.LoginPref
 
 class Login : AppCompatActivity() {
 
@@ -13,10 +16,14 @@ class Login : AppCompatActivity() {
     lateinit var username : EditText
     lateinit var  password : EditText
 
+    lateinit var session: LoginPref
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        session = LoginPref(this)
 
         btnLogin = findViewById(R.id.login)
         username = findViewById(R.id.username)
@@ -24,11 +31,15 @@ class Login : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
             if (this.inputValidation()) {
-                this.loginValidation()
+                //this.loginValidation()
+                session.createLogginSession(username.text.toString(),password.text.toString())
+                var i : Intent = Intent(applicationContext, MenuActivity::class.java)
+                startActivity(i)
+                finish()
             }
             else {
                 val dialog = AlertDialog.Builder(this)
-                    .setTitle("Login")
+                    .setTitle("Log in")
                     .setMessage("Complete all the information")
                     .setNegativeButton("Cancel") { view, _ ->
                         finish()
@@ -45,10 +56,10 @@ class Login : AppCompatActivity() {
 
     // Check empty inputs
     private fun inputValidation() : Boolean {
-        val user = username.text.toString()
-        val passwd = password.text.toString()
+        val user = username.text.toString().trim()
+        val passwd = password.text.toString().trim()
 
-        return !(user == "" || passwd == "")
+        return !(user.isEmpty() || passwd.isEmpty())
     }
 
     // Login Validation
