@@ -19,23 +19,22 @@ class LoginPref {
         editor = pref.edit()
     }
 
-    // Keys for user shared preferences
     companion object {
         val PREF_NAME = "Login_Preference"
         val IS_LOGIN = "isLoggedin"
         val KEY_USERNAME = "username"
         val KEY_PASSWORD = "password"
+        val KEY_USERID = "user_id"
     }
 
-    // Create new session
-    fun createLogginSession(username: String, password : String) {
+    fun createLogginSession(username: String, password : String, userid : String ) {
         editor.putBoolean(IS_LOGIN, true)
         editor.putString(KEY_USERNAME, username)
         editor.putString(KEY_PASSWORD, password)
+        editor.putString(KEY_USERID, userid)
         editor.commit()
     }
 
-    // Check if the actual user is logged in
     fun checkLogin() {
         if (!this.isLoggedin()) {
             var i : Intent = Intent(context, HomeActivity::class.java)
@@ -45,7 +44,6 @@ class LoginPref {
         }
     }
 
-    // Get user details from shared preferences
     fun getUserDetails() : HashMap<String, String> {
         var user : Map<String, String> = HashMap<String, String>()
         (user as HashMap).put(KEY_USERNAME, pref.getString(KEY_USERNAME, null)!!)
@@ -53,7 +51,6 @@ class LoginPref {
         return user
     }
 
-    // Finish actual session of the user (clear user shared preferences)
     fun LogoutUser() {
         editor.clear()
         editor.commit()
@@ -63,7 +60,6 @@ class LoginPref {
         context.startActivity(i)
     }
 
-    // Boolean value to check if user is logged in
     fun isLoggedin() : Boolean {
         return pref.getBoolean(IS_LOGIN, false)
     }
