@@ -32,12 +32,15 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             if (this.inputValidation()) {
                 //this.loginValidation()
+                // Create new session for the user
                 session.createLogginSession(username.text.toString(),password.text.toString())
+                // Start main menu activity
                 var i : Intent = Intent(applicationContext, MenuActivity::class.java)
                 startActivity(i)
                 finish()
             }
             else {
+                // Error message to complete all inputs
                 val dialog = AlertDialog.Builder(this)
                     .setTitle("Log in")
                     .setMessage("Complete all the information")

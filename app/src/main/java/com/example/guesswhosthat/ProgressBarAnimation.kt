@@ -14,6 +14,7 @@ class ProgressBarAnimation(context: Context, progressBar: ProgressBar, txtView: 
     var from : Float = 0.0F
     var to : Float = 0.0F
 
+    // Initialize all attributes ob the animation
     init {
         this.context = context
         this.progressBar = progressBar
@@ -22,13 +23,16 @@ class ProgressBarAnimation(context: Context, progressBar: ProgressBar, txtView: 
         this.to = to
     }
 
+    // Define transformation of the progressbar
     @Override
     override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
         super.applyTransformation(interpolatedTime, t)
         var value : Float = from + (to - from) * interpolatedTime
         progressBar.progress = value.toInt()
+        // Change loading percentage
         txtView.text = value.toInt().toString() + " %"
 
+        // Start home activity after the animation was completed
         if (value == to) {
             val intent = Intent(context, HomeActivity::class.java)
             context.startActivity(intent)

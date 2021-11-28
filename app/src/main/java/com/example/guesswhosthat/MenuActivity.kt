@@ -21,16 +21,20 @@ class MenuActivity : AppCompatActivity() {
         session = LoginPref(this)
 
         username = findViewById(R.id.tvUsername)
-        password = findViewById(R.id.tvPassword)
+        //password = findViewById(R.id.tvPassword)
         btnLogout = findViewById(R.id.btn_logout)
 
+        // Check if user is already logged in to skip login activity
         session.checkLogin()
 
+        // Obtained user details from the shared preferences
         var user : HashMap<String, String> = session.getUserDetails()
 
-        username.text = user.get(LoginPref.KEY_USERNAME)
-        password.text = user.get(LoginPref.KEY_PASSWORD)
+        // Welcome message
+        username.text = "Welcome back " + user.get(LoginPref.KEY_USERNAME)
+        //password.text = user.get(LoginPref.KEY_PASSWORD)
 
+        // Log out from the actual session
         btnLogout.setOnClickListener {
             session.LogoutUser()
             finish()
