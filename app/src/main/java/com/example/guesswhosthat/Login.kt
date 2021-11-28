@@ -1,14 +1,30 @@
 package com.example.guesswhosthat
 
-import android.app.appsearch.AppSearchSession
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.guesswhosthat.Helpers.ErrorResponseHelper
+import com.example.guesswhosthat.Helpers.NetworkUtil
+import com.example.guesswhosthat.Models.ErrorResponse
+import com.example.guesswhosthat.Models.UserLoginRequest
+import com.example.guesswhosthat.Models.UserLoginResponse
+import com.example.guesswhosthat.Services.APIManager
 import com.example.guesswhosthat.Session.LoginPref
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.IOException
+import java.lang.Exception
+
 
 class Login : AppCompatActivity() {
 
@@ -32,10 +48,7 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             if (this.inputValidation()) {
                 //this.loginValidation()
-                session.createLogginSession(username.text.toString(),password.text.toString())
-                var i : Intent = Intent(applicationContext, MenuActivity::class.java)
-                startActivity(i)
-                finish()
+                loginValidation()
             }
             else {
                 val dialog = AlertDialog.Builder(this)
@@ -64,6 +77,35 @@ class Login : AppCompatActivity() {
 
     // Login Validation
     private fun loginValidation() {
+        if(NetworkUtil.isOnline(this@Login)){
+            CoroutineScope(Dispatchers.IO).launch {
+                //val call = APIManager().getApiObj().postToApi<UserLoginRequest, UserLoginResponse>("users/login",UserLoginRequest(username.toString(), password.toString()))
+                val call = APIManager().getApiObj(this@Login).userLogin(UserLoginRequest(username.text.toString(), password.text.toString()))
+                val body = call.body()
+                runOnUiThread {
+                    if(call.isSuccessful){
+                        if(body!=null){
+                            Toast.makeText(this@Login, body.message, Toast.LENGTH_SHORT).show()
+                            session.createLogginSession(username.text.toString(),password.text.toString(),
+                                body.id.toString()
+                            )
+                            var i : Intent = Intent(applicationContext, MenuActivity::class.java)
+                            startActivity(i)
+                            finish()
+                        }
+                    }else{
+                        try {
+                            Toast.makeText(this@Login, ErrorResponseHelper.getErrorMessage(call.errorBody()), Toast.LENGTH_LONG).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(this@Login, e.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }else{
+            Toast.makeText(this@Login, "No internet connection!", Toast.LENGTH_LONG).show()
+
+        }
 
     }
 }
