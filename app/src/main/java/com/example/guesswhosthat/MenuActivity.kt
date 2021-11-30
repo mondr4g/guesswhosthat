@@ -1,13 +1,14 @@
 package com.example.guesswhosthat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.guesswhosthat.Helpers.SocketHandler
 import com.example.guesswhosthat.Session.LoginPref
+import com.example.guesswhosthat.bkgndmusic.MusicService
 import io.socket.client.Socket
-
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var username : TextView
@@ -42,8 +43,8 @@ class MenuActivity : AppCompatActivity() {
         username.text = user.get(LoginPref.KEY_USERNAME)
         password.text = user.get(LoginPref.KEY_PASSWORD)
 
-
-
+        val intent = Intent(this@MenuActivity, MusicService::class.java)
+        startService(intent)
 
         btnLogout.setOnClickListener {
             session.LogoutUser()
