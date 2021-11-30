@@ -1,0 +1,922 @@
+[
+ {
+  "id": "0",
+  "nombre": "ada wong",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "negro",
+    "tamaño": "mediano",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "pequeña",
+   "labios":"Delgados",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "1",
+  "nombre": "agente 47",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "",
+    "tamaño": "calvo",
+    "tipo": "calvo"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "2",
+  "nombre": "carl jhonson",
+  "tez": "obscura",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "Crespo"
+  },
+  "rostro":{
+   "orejas": "pequeñas",
+   "nariz": "grande",
+   "labios":"gruesos",
+   "ojos": {
+    "color": "cafes",
+    "tipo": "pequeños"
+   },
+   "cejas": "carentes",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "3",
+  "nombre": "chris redfield",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "negro",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "grande",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "4",
+  "nombre": "Cirilla Fiona Elen Riannon",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "mujer",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "verde",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "5",
+  "nombre": "claire redfield",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "mujer",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "pequeñas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "6",
+  "nombre": "Claude",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "7",
+  "nombre": "Princess Daisy",
+  "tez": "palida",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "largo",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "pequeña",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "8",
+  "nombre": "Dante",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "mediano",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "9",
+  "nombre": "Doom guy",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "verde",
+    "tipo": "medianos"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "10",
+  "nombre": "Dracula",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "largo",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "amarillos",
+    "tipo": "pequeños"
+   },
+   "cejas": "pobladas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "11",
+  "nombre": "Gannondorf",
+  "tez": "obscura",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rojo",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "amarillo",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "12",
+  "nombre": "Geralt de Rivia",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "amarillo",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "13",
+  "nombre": "Iori Yagami",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rojo",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "pequeñas",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "rojo",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "14",
+  "nombre": "Jill Valentine",
+  "tez": "palida",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "mediano",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "15",
+  "nombre": "Kratos",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "calvo",
+    "tipo": "calvo"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"delgados",
+   "ojos": {
+    "color": "verde",
+    "tipo": "pequeños"
+   },
+   "cejas": "pobladas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "16",
+  "nombre": "Kyo Kusanagi",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "mediano",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "17",
+  "nombre": "Lara Croft",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "mujer",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "pequeña",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "18",
+  "nombre": "Leon Scott Kennedy",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ }, 
+ {
+  "id": "19",
+  "nombre": "Link niño",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "mediano",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "20",
+  "nombre": "Luigi",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "rizado"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "21",
+  "nombre": "Mario",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "rizado"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "22",
+  "nombre": "Nero",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "23",
+  "nombre": "Princess Peach",
+  "tez": "palida",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "largo",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "pequeñas",
+   "nariz": "pequeña",
+   "labios":"gruesos",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "carentes",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "24",
+  "nombre": "Richter Belmont",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "25",
+  "nombre": "Rugal Bernstein",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "bicolor",
+    "tipo": "normales"
+   },
+   "cejas": "finas",
+   "tipo": "ancuhra media"
+  }
+ },
+ {
+  "id": "26",
+  "nombre": "Ryu",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "normales"
+   },
+   "cejas": "pobladas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "27",
+  "nombre": "Simon belmont",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "largo",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "normales"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "28",
+  "nombre": "Steve",
+  "tez": "bronceada",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "afro"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "pequeña",
+   "labios":"gruesos",
+   "ojos": {
+    "color": "azul",
+    "tipo": "pequeños"
+   },
+   "cejas": "nada",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "29",
+  "nombre": "Tommy Versetti",
+  "tez": "clara",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "pequeñas",
+   "nariz": "pequeña",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "cafe",
+    "tipo": "pequeños"
+   },
+   "cejas": "pobladas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "30",
+  "nombre": "Trish",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "mujer",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "mediana",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "verdes",
+    "tipo": "pequeños"
+   },
+   "cejas": "finas",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "31",
+  "nombre": "V",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "negro",
+    "tamaño": "mediano",
+    "tipo": "ondulado"
+  },
+  "rostro":{
+   "orejas": "no visibles",
+   "nariz": "mediana",
+   "labios":"grosor medio",
+   "ojos": {
+    "color": "negro",
+    "tipo": "pequeños"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "32",
+  "nombre": "Vergil",
+  "tez": "palida",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "blanco",
+    "tamaño": "mediano",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "pequeños"
+   },
+   "cejas": "carentes",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "33",
+  "nombre": "Walter",
+  "tez": "obscura",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "negro",
+    "tamaño": "mediano",
+    "tipo": "afro"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "pequeña",
+   "labios":"gruesos",
+   "ojos": {
+    "color": "blanco",
+    "tipo": "grandes"
+   },
+   "cejas": "carentes",
+   "tipo": "ancuhra media"
+  }
+ },
+ {
+  "id": "34",
+  "nombre": "Waluigi",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "rizado"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"delgados",
+   "ojos": {
+    "color": "negro",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "delgado"
+  }
+ },
+ {
+  "id": "35",
+  "nombre": "Wario",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "cafe",
+    "tamaño": "corto",
+    "tipo": "rizado"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "grande",
+   "labios":"delgados",
+   "ojos": {
+    "color": "negro",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "36",
+  "nombre": "Webber",
+  "tez": "bronceada",
+  "accesorios": "no",
+  "genero": "hombre",
+  "cabello":{
+    "color": "amarillo",
+    "tamaño": "largo",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "no visible",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "blancos",
+    "tipo": "grandes"
+   },
+   "cejas": "pobladas",
+   "tipo": "ancho"
+  }
+ },
+ {
+  "id": "37",
+  "nombre": "Albert Wesker",
+  "tez": "palida",
+  "accesorios": "si",
+  "genero": "hombre",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "medianas",
+   "nariz": "mediana",
+   "labios":"delgados",
+   "ojos": {
+    "color": "amarillos",
+    "tipo": "normales"
+   },
+   "cejas": "carentes",
+   "tipo": "anchura media"
+  }
+ },
+ {
+  "id": "38",
+  "nombre": "Wurt",
+  "tez": "bronceada",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "",
+    "tamaño": "calvo",
+    "tipo": "calvo"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "blanco",
+    "tipo": "grandes"
+   },
+   "cejas": "nada",
+   "tipo": "ancho"
+  }
+ }, 
+ {
+  "id": "39",
+  "nombre": "Zelda",
+  "tez": "clara",
+  "accesorios": "si",
+  "genero": "mujer",
+  "cabello":{
+    "color": "rubio",
+    "tamaño": "corto",
+    "tipo": "lacio"
+  },
+  "rostro":{
+   "orejas": "grandes",
+   "nariz": "pequeña",
+   "labios":"delgados",
+   "ojos": {
+    "color": "azul",
+    "tipo": "grandes"
+   },
+   "cejas": "finas",
+   "tipo": "delgado"
+  }
+ }
+]

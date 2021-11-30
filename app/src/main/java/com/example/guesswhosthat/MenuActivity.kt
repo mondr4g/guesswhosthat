@@ -1,5 +1,6 @@
 package com.example.guesswhosthat
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -10,12 +11,12 @@ import com.example.guesswhosthat.Helpers.NetworkUtil
 import com.example.guesswhosthat.Helpers.SocketHandler
 import com.example.guesswhosthat.Services.APIManager
 import com.example.guesswhosthat.Session.LoginPref
+import com.example.guesswhosthat.bkgndmusic.MusicService
 import io.socket.client.Socket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
-
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var username : TextView
@@ -50,8 +51,8 @@ class MenuActivity : AppCompatActivity() {
         username.text = user.get(LoginPref.KEY_USERNAME)
         password.text = user.get(LoginPref.KEY_PASSWORD)
 
-
-
+        val intent = Intent(this@MenuActivity, MusicService::class.java)
+        startService(intent)
 
         btnLogout.setOnClickListener {
             if(NetworkUtil.isOnline(this)){

@@ -29,7 +29,6 @@ class HomeActivity : AppCompatActivity() {
 
         login = findViewById(R.id.btn_login)
         signup = findViewById(R.id.btn_signup)
-
         login.setOnClickListener { userOption("login")}
         signup.setOnClickListener { userOption("signup")}
     }
