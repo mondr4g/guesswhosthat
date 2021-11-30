@@ -1,9 +1,15 @@
 package com.example.guesswhosthat.Helpers
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import com.example.guesswhosthat.Helpers.GlobalVars.URL_SOCKETS
 import com.example.guesswhosthat.Helpers.GlobalVars.URL_SOCKETS_LOCAL
 import io.socket.client.IO
 import io.socket.client.Socket
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.net.URISyntaxException
 
 object SocketHandler {
@@ -11,15 +17,16 @@ object SocketHandler {
     var mSocket: Socket?=null
     private const val TAG = "MyActivity"
 
-
     @Synchronized
-    fun setSocket() {
+    fun setSocket(mContext: Context) {
         try {
-            mSocket = IO.socket(URL_SOCKETS_LOCAL)
+            mSocket = IO.socket(URL_SOCKETS)
         } catch (e: URISyntaxException) {
             Log.i(TAG, "MEsto noo conecta")
 
         }
+
+
     }
 
     @Synchronized
@@ -47,4 +54,6 @@ object SocketHandler {
             mSocket!!.connected()
         }
     }
+
+
 }
