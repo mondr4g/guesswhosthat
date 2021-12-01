@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.guesswhosthat.Helpers.GlobalVars.URL_SOCKETS
+import com.example.guesswhosthat.Helpers.GlobalVars.URL_SOCKETS_LOCAL
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +20,7 @@ object SocketHandler {
     @Synchronized
     fun setSocket(mContext: Context) {
         try {
-            mSocket = IO.socket(URL_SOCKETS)
+            mSocket = IO.socket(URL_SOCKETS_LOCAL)
         } catch (e: URISyntaxException) {
             Log.i(TAG, "MEsto noo conecta")
 

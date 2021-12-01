@@ -87,7 +87,7 @@ class MenuActivity : AppCompatActivity() {
 
                 mSocket = SocketHandler.getSocket()
 
-                mSocket?.emit("new_user",user.get(LoginPref.KEY_USERID))
+
 
                 mSocket?.on("error_b"){ args->
                     if (args[0] != null) {
@@ -121,6 +121,7 @@ class MenuActivity : AppCompatActivity() {
                             }
                     }
                 }
+                mSocket?.emit("new_user",user.get(LoginPref.KEY_USERID))
             }
 
         }

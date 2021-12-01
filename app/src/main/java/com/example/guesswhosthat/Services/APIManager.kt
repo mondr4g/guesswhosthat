@@ -11,7 +11,7 @@ class APIManager {
     //https://gentle-basin-19977.herokuapp.com/api/
     fun getApiObj(mContext: Context): IAPIService {
         val retro = Retrofit.Builder()
-            .baseUrl(GlobalVars.URL_API)
+            .baseUrl(GlobalVars.URL_API_LOCAL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
