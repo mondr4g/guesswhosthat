@@ -52,6 +52,23 @@ class CardAdapter(private val data : Array<Character>,
                     isFront.text = "0"
                 }
             }
+
+            card_back.setOnClickListener {
+                if (isFront.text == "1") {
+                    front_anim.setTarget(card_back)
+                    back_anim.setTarget(card_front)
+                    front_anim.start()
+                    back_anim.start()
+                    isFront.text = "0"
+                }
+                else {
+                    front_anim.setTarget(card_front)
+                    back_anim.setTarget(card_back)
+                    front_anim.start()
+                    back_anim.start()
+                    isFront.text = "1"
+                }
+            }
         }
     }
 

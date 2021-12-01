@@ -41,10 +41,12 @@ class HomeActivity : AppCompatActivity() {
         if (option == "login") {
             var intent1 = Intent(applicationContext, Login::class.java)
             startActivity(intent1)
+            finish()
         }
         else if (option == "signup") {
             var intent2 = Intent(applicationContext, Signup::class.java)
             startActivity(intent2)
+            finish()
         }
     }
 

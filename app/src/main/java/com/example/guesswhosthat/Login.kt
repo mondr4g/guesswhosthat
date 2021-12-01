@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -34,7 +35,7 @@ class Login : AppCompatActivity() {
 
     lateinit var session : LoginPref
 
-    lateinit var btnForgotPassword : Button
+    lateinit var btnForgotPassword : TextView
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,5 +123,13 @@ class Login : AppCompatActivity() {
 
         }
 
+    }
+
+    @Override
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var i : Intent = Intent(applicationContext, HomeActivity::class.java)
+        startActivity(i)
+        finish()
     }
 }

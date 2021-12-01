@@ -20,13 +20,11 @@ object SocketHandler {
     @Synchronized
     fun setSocket(mContext: Context) {
         try {
-            mSocket = IO.socket(URL_SOCKETS_LOCAL)
+            mSocket = IO.socket(URL_SOCKETS)
         } catch (e: URISyntaxException) {
             Log.i(TAG, "MEsto noo conecta")
 
         }
-
-
     }
 
     @Synchronized

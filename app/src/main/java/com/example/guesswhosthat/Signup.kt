@@ -79,8 +79,8 @@ class Signup : AppCompatActivity() {
                                 AlertDialog.Builder(this@Signup)
                                     .setTitle("Sign Up")
                                     .setMessage("complete your registration by verifying your account by email.!!").create().show()
-                                var intent1 = Intent(applicationContext, HomeActivity::class.java)
-                                startActivity(intent1)
+                                var i : Intent = Intent(applicationContext, Login::class.java)
+                                startActivity(i)
                                 finish()
                             }
                             Toast.makeText(this@Signup, body.message, Toast.LENGTH_SHORT).show()
@@ -97,5 +97,13 @@ class Signup : AppCompatActivity() {
         }else{
             Toast.makeText(this, "No internet connection!", Toast.LENGTH_LONG).show()
         }
+    }
+
+    @Override
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var i : Intent = Intent(applicationContext, HomeActivity::class.java)
+        startActivity(i)
+        finish()
     }
 }

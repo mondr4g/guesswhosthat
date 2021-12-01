@@ -20,7 +20,6 @@ import java.lang.Exception
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var username : TextView
-    private lateinit var password : TextView
     private lateinit var btnLogout : Button
 
     private lateinit var btnSocketConn: Button
@@ -40,7 +39,6 @@ class MenuActivity : AppCompatActivity() {
         session = LoginPref(this)
 
         username = findViewById(R.id.tvUsername)
-        //password = findViewById(R.id.tvPassword)
         btnLogout = findViewById(R.id.btn_logout)
 
         btnSocketConn = findViewById(R.id.btnSocketConn)
@@ -53,7 +51,6 @@ class MenuActivity : AppCompatActivity() {
         var user : HashMap<String, String> = session.getUserDetails()
 
         username.text = user.get(LoginPref.KEY_USERNAME)
-        password.text = user.get(LoginPref.KEY_PASSWORD)
 
         val intent = Intent(this@MenuActivity, MusicService::class.java)
         startService(intent)
@@ -140,5 +137,12 @@ class MenuActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    // Exit Application
+    @Override
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
     }
 }
