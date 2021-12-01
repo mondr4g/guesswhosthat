@@ -8,50 +8,59 @@ import com.google.gson.reflect.TypeToken
 import java.io.IOException
 
 data class Cabe(
-    @SerializedName("color") val color: String,
-    @SerializedName("tamaño") val tamaño: String,
-    @SerializedName("tipo") val tipo: String
+    @SerializedName("color") var color: String,
+    @SerializedName("tamaño") var tamaño: String,
+    @SerializedName("tipo") var tipo: String
 )
 
 data class Ojo(
-    @SerializedName("color") val color: String,
-    @SerializedName("tipo") val tipo: String
+    @SerializedName("color") var color: String,
+    @SerializedName("tipo") var tipo: String
 )
 
 data class Rost(
-    @SerializedName("orejas") val orejas: String,
-    @SerializedName("nariz") val nariz: String,
-    @SerializedName("labios") val labios: String,
-    @SerializedName("ojos") val ojos: Ojo,
-    @SerializedName("cejas") val cejas: String,
-    @SerializedName("tipo") val tipo: String
+    @SerializedName("orejas") var orejas: String,
+    @SerializedName("nariz") var nariz: String,
+    @SerializedName("labios") var labios: String,
+    @SerializedName("ojos") var ojos: Ojo,
+    @SerializedName("cejas") var cejas: String,
+    @SerializedName("tipo") var tipo: String
 )
 
 data class Pobj(
-    @SerializedName("id") val id: Int,
-    @SerializedName("nombre") val nombre: String,
-    @SerializedName("tez") val tez: String,
-    @SerializedName("accesorios") val accesorios: String,
-    @SerializedName("genero") val genero: String,
-    @SerializedName("cabello") val cabello: Cabe,
-    @SerializedName("rostro") val rostro: Rost
+    @SerializedName("id") var id: Int,
+    @SerializedName("nombre") var nombre: String,
+    @SerializedName("tez") var tez: String,
+    @SerializedName("accesorios") var accesorios: String,
+    @SerializedName("genero") var genero: String,
+    @SerializedName("cabello") var cabello: Cabe,
+    @SerializedName("rostro") var rostro: Rost
+)
+
+data class PsjObj(
+    @SerializedName("resourceId") var resourceId: Int,
+    @SerializedName("personaje") var personaje: Pobj
 )
 
 object Characters {
-    private lateinit var personajes: MutableList<Pobj>
+    private lateinit var personajes: MutableList<PsjObj>
 
     fun getCharacters(charIds:Array<Int>, ctx: Context){
         val jsonFileString = getJsonDataFromAsset(ctx)
+        var rid: Int
+        var helper: PsjObj
         val gson = Gson()
         val listType = object: TypeToken<List<Pobj>>() {}.type
         if(jsonFileString != null){
             var Temp:List<Pobj> = gson.fromJson(jsonFileString,listType)
             for(psjId in charIds) {
-                Temp.forEach{psj ->
-                    run {
-                        if (psjId == psj.id) {
-                            personajes.add(psj)
-                        }
+                for(psj in Temp){
+                    if (psjId == psj.id) {
+                        rid = ctx.resources.getIdentifier("i${psj.id}",
+                            "drawable", ctx.packageName)
+                        helper = PsjObj(rid, psj)
+                        personajes.add(helper)
+                        break
                     }
                 }
             }
@@ -61,7 +70,7 @@ object Characters {
     }
 
     fun emptyCharsList(){
-        personajes.clear();
+        personajes.clear()
     }
 
     fun getJsonDataFromAsset(context:Context): String?{
