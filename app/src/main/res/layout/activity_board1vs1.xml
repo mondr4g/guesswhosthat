@@ -3,68 +3,137 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:paddingHorizontal="30dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:backgroundTint="@color/secondary"
+            android:text="⬅️"
+            android:layout_marginRight="30dp"/>
+
+        <Button
+            android:id="@+id/btn_music1vs1"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:backgroundTint="@color/primary"
             android:text="🎵"/>
+
+        <Button
+            android:id="@+id/btn_adivina1vs1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"
+            android:text="Guess"/>
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rowP1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:orientation="vertical">
 
-    </HorizontalScrollView>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
 
-    <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rowP1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rowP2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rowP3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rowP4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:background="@drawable/round_bg"
+        android:backgroundTint="@color/blue"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom= "true"
+        android:layout_marginVertical="20dp"
+        android:gravity="center">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rowP2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+         <LinearLayout
+             android:layout_width="250dp"
+             android:layout_height="40dp"
+             android:background="@drawable/round_bg"
+             android:padding="12dp"
+             android:orientation="vertical">
 
-    </HorizontalScrollView>
+             <EditText
+                 android:id="@+id/chat_1vs1"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:background="@color/white"
+                 android:hint="Type message... "
+                 android:inputType="text"
+                 android:textColor="@color/black"
+                 android:textColorHint="@color/blue"
+                 android:textSize="15sp"/>
+         </LinearLayout>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rowP3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </HorizontalScrollView>
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rowP4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </HorizontalScrollView>
+        <Button
+            android:layout_marginLeft="10dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:backgroundTint="#80b918"
+            android:text="💬"/>
+    </LinearLayout>
 </LinearLayout>

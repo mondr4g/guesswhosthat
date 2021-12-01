@@ -43,7 +43,7 @@ data class PsjObj(
 )
 
 object Characters {
-    private lateinit var personajes: MutableList<PsjObj>
+    private var personajes: MutableList<PsjObj> = ArrayList()
 
     fun getCharacters(charIds:Array<Int>, ctx: Context){
         val jsonFileString = getJsonDataFromAsset(ctx)
@@ -83,4 +83,9 @@ object Characters {
         }
         return jsonString
     }
+
+    fun getPersonajes() : MutableList<PsjObj> {
+        return personajes
+    }
+
 }

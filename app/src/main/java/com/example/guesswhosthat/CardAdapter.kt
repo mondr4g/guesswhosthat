@@ -10,15 +10,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
-data class Character(val name : String, val imgId : String)
+data class Character(val name : String, val imgId : Int)
 
 class CardAdapter(private val data : Array<Character>,
                  private val clickListener : (Character) -> Unit) :
     RecyclerView.Adapter<CardAdapter.CardsViewHolder>() {
 
     class CardsViewHolder(val item : View) : RecyclerView.ViewHolder(item) {
-        val img : ImageView = item.findViewById(R.id.character) as ImageView
+        // Character
+        val img : ImageView = item.findViewById(R.id.char_img) as ImageView
+        val name : TextView = item.findViewById(R.id.char_name) as TextView
+
+        // Card
         val isFront : TextView = item.findViewById(R.id.isFront) as TextView
         val card_front : LinearLayout = item.findViewById(R.id.card_front) as LinearLayout
         val card_back : LinearLayout = item.findViewById(R.id.card_back) as LinearLayout
@@ -30,7 +35,8 @@ class CardAdapter(private val data : Array<Character>,
         val back_anim : AnimatorSet = AnimatorInflater.loadAnimator(item.context, R.animator.back_animator) as AnimatorSet
 
         fun bindCard(c : Character) {
-            img.setImageResource(R.drawable.def)
+            img.setImageResource(c.imgId)
+            name.text = c.name
 
             // camera scale
             card_front.cameraDistance = 8000 * scale
