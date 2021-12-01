@@ -61,7 +61,6 @@ class Signup : AppCompatActivity() {
         }else{
             return false
         }
-
     }
 
     private fun signUp(){

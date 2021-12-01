@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progress_bar)
         txtView = findViewById(R.id.progress)
 
+        // Define values for progressbar
         progressBar.max = 100
         progressBar.scaleY = 3f
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun progressAnimation() {
+        // Start animation
         var animation : ProgressBarAnimation = ProgressBarAnimation(this,progressBar,txtView,0.0F,100.0F)
         animation.duration = 8000
         progressBar.animation = animation

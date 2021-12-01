@@ -26,6 +26,8 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var btnSocketConn: Button
     private lateinit var btnSocketDisc: Button
 
+    private lateinit var btn1vs1 : Button
+
     private var mSocket: Socket? = null
 
     lateinit var session : LoginPref
@@ -38,11 +40,13 @@ class MenuActivity : AppCompatActivity() {
         session = LoginPref(this)
 
         username = findViewById(R.id.tvUsername)
-        password = findViewById(R.id.tvPassword)
+        //password = findViewById(R.id.tvPassword)
         btnLogout = findViewById(R.id.btn_logout)
 
         btnSocketConn = findViewById(R.id.btnSocketConn)
         btnSocketDisc = findViewById(R.id.btnSocketDisc)
+
+        btn1vs1 = findViewById(R.id.btn_1vs1)
 
         session.checkLogin()
 
@@ -130,7 +134,10 @@ class MenuActivity : AppCompatActivity() {
             SocketHandler.mSocket?.emit("user_off",user.get(LoginPref.KEY_USERID) )
         }
 
-
+        btn1vs1.setOnClickListener {
+            var i : Intent = Intent(applicationContext, GameActivity::class.java)
+            startActivity(i)
+        }
 
 
     }

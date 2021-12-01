@@ -21,6 +21,7 @@ class Splash : AppCompatActivity() {
 
         lottieDrack = findViewById(R.id.drack)
 
+        // Create a delay before starting new activity
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

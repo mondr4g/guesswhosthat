@@ -4,48 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp">
+    android:background="@drawable/bg_menu">
 
-    <TextView
-        android:id="@+id/tvUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="184dp"
-        android:text="Username"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.402" />
-
-    <TextView
+    <!--    <TextView
         android:id="@+id/tvPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
+        android:layout_marginTop="484dp"
         android:text="Password"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.404"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+-->
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log out"
+        android:layout_width="80dp"
+        android:layout_height="39dp"
+        android:backgroundTint="@color/secondary"
+        android:text="Exit"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassword"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+<!--
+    <Button
+        android:id="@+id/btn_settings"
+        android:layout_width="139dp"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/secondary"
+        android:text="Settings"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="256dp"
+        tools:layout_editor_absoluteY="16dp" />
+-->
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="440dp"
+        android:text="Username"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btn_1vs1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="28dp"
+        android:text="1 vs 1"
+        android:backgroundTint="@color/primary"
+        android:elevation="50dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+        tools:layout_editor_absoluteX="49dp" />
+
+    <Button
+        android:id="@+id/btn_playFriends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="12dp"
+        android:text="Play with friends"
+        android:backgroundTint="@color/secondary"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:elevation="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/btn_1vs1"
+        tools:layout_editor_absoluteX="49dp" />
+
+    <Button
+        android:id="@+id/btn_1vsia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:text="1 vs A.I."
+        android:textStyle="bold"
+        android:backgroundTint="@color/blue"
+        android:elevation="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_playFriends"
+        app:layout_constraintVertical_bias="0.194"
+        tools:layout_editor_absoluteX="50dp" />
+
 
     <Button
         android:id="@+id/btnSocketConn"

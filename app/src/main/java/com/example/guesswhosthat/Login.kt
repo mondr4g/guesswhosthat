@@ -32,7 +32,9 @@ class Login : AppCompatActivity() {
     lateinit var username : EditText
     lateinit var  password : EditText
 
-    lateinit var session: LoginPref
+    lateinit var session : LoginPref
+
+    lateinit var btnForgotPassword : Button
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +47,10 @@ class Login : AppCompatActivity() {
         username = findViewById(R.id.username)
         password = findViewById(R.id.password)
 
+        btnForgotPassword = findViewById(R.id.textView2)
+
         btnLogin.setOnClickListener {
             if (this.inputValidation()) {
-                //this.loginValidation()
                 loginValidation()
             }
             else {
@@ -64,6 +67,11 @@ class Login : AppCompatActivity() {
 
                 dialog.show()
             }
+        }
+
+        btnForgotPassword.setOnClickListener {
+            var i : Intent = Intent(applicationContext, ForgotPasswdActivity::class.java)
+            startActivity(i)
         }
     }
 
