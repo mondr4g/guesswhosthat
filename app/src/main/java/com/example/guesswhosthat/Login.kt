@@ -104,6 +104,12 @@ class Login : AppCompatActivity() {
                 }
             }
         }else{
+            session.createLogginSession(username.text.toString(),password.text.toString(),
+               ""
+            )
+            var i : Intent = Intent(applicationContext, MenuActivity::class.java)
+            startActivity(i)
+            finish()
             Toast.makeText(this@Login, "No internet connection!", Toast.LENGTH_LONG).show()
 
         }

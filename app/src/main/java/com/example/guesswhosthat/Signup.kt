@@ -52,14 +52,14 @@ class Signup : AppCompatActivity() {
 
     private fun inputValidation() : Boolean{
         val user = binding.usernameReg.text.toString().trim()
-        val email = binding.usernameReg.text.toString().trim()
+        val email = binding.emailReg.text.toString().trim()
         val pass = binding.passwordReg.text.toString().trim()
 
         return if(!(user.isEmpty() || pass.isEmpty() || email.isEmpty())){
             val pattern: Pattern = Patterns.EMAIL_ADDRESS
             pattern.matcher(email).matches()
         }else{
-            false
+            return false
         }
 
     }
@@ -80,6 +80,9 @@ class Signup : AppCompatActivity() {
                                 AlertDialog.Builder(this@Signup)
                                     .setTitle("Sign Up")
                                     .setMessage("complete your registration by verifying your account by email.!!").create().show()
+                                var intent1 = Intent(applicationContext, HomeActivity::class.java)
+                                startActivity(intent1)
+                                finish()
                             }
                             Toast.makeText(this@Signup, body.message, Toast.LENGTH_SHORT).show()
                         }

@@ -1,5 +1,6 @@
 package com.example.guesswhosthat.Services
 
+import com.example.guesswhosthat.Models.ErrorResponse
 import com.example.guesswhosthat.Models.UserLoginRequest
 import com.example.guesswhosthat.Models.UserLoginResponse
 import com.example.guesswhosthat.Models.newUserRequest
@@ -16,7 +17,8 @@ interface IAPIService {
     @Headers("Accept: application/json")
     suspend fun newUser(@Body user: newUserRequest): Response<UserLoginResponse>
 
-
+    @GET("users/logout")
+    suspend fun userLogout(@Query("id") id: String):Response<ErrorResponse>
 
     @POST
     @Multipart

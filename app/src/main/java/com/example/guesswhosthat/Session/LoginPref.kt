@@ -48,6 +48,7 @@ class LoginPref {
         var user : Map<String, String> = HashMap<String, String>()
         (user as HashMap).put(KEY_USERNAME, pref.getString(KEY_USERNAME, null)!!)
         (user as HashMap).put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null)!!)
+        (user as HashMap).put(KEY_USERID, pref.getString(KEY_USERID, null)!!)
         return user
     }
 
