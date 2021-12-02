@@ -18,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+const val BTN_PRESSED = "com.example.guesswhosthat.BTNPRESSED"
+
 class MenuActivity : AppCompatActivity() {
     private lateinit var username : TextView
     private lateinit var btnLogout : Button
@@ -26,6 +28,8 @@ class MenuActivity : AppCompatActivity() {
 //    private lateinit var btnSocketDisc: Button
 
     private lateinit var btn1vs1 : Button
+    private lateinit var btnFriends : Button
+    private lateinit var btn1vsAI : Button
 
     private var mSocket: Socket? = null
 
@@ -47,12 +51,14 @@ class MenuActivity : AppCompatActivity() {
 //        btnSocketDisc = findViewById(R.id.btnSocketDisc)
 
         btn1vs1 = findViewById(R.id.btn_1vs1)
+        btnFriends = findViewById(R.id.btn_playFriends)
+        btn1vsAI = findViewById(R.id.btn_1vsia)
 
         session.checkLogin()
 
         user  = session.getUserDetails()
 
-        username.text = user!!.get(LoginPref.KEY_USERNAME)
+        username.text = "Welcome " + user!!.get(LoginPref.KEY_USERNAME)
 
         val intent = Intent(this@MenuActivity, MusicService::class.java)
         startService(intent)
@@ -94,10 +100,25 @@ class MenuActivity : AppCompatActivity() {
 
 
         btn1vs1.setOnClickListener {
-            var i : Intent = Intent(applicationContext, GameActivity::class.java)
+            var i : Intent = Intent(applicationContext, GameActivity::class.java).apply {
+                putExtra(BTN_PRESSED, "0")
+            }
             startActivity(i)
         }
 
+        btnFriends.setOnClickListener {
+            var i : Intent = Intent(applicationContext, GameActivity::class.java).apply {
+                putExtra(BTN_PRESSED, "1")
+            }
+            startActivity(i)
+        }
+
+        btn1vsAI.setOnClickListener {
+            var i : Intent = Intent(applicationContext, GameActivity::class.java).apply {
+                putExtra(BTN_PRESSED, "2")
+            }
+            startActivity(i)
+        }
 
     }
 

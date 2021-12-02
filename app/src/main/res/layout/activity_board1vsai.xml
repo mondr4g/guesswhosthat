@@ -82,32 +82,12 @@
                 android:layout_marginVertical="20dp"
                 android:gravity="center">
 
-                <LinearLayout
-                    android:layout_width="250dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/round_bg"
-                    android:padding="12dp"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/chat_1vs1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:hint="Type message... "
-                        android:inputType="text"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/blue"
-                        android:textSize="15sp"
-                        tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
-                </LinearLayout>
-
                 <Button
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
                     android:backgroundTint="#80b918"
-                    android:text="💬" />
+                    android:text="CLUE 💬" />
             </LinearLayout>
         </LinearLayout>
 

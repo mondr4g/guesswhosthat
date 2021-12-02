@@ -24,7 +24,29 @@ class GameActivity : AppCompatActivity() {
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val btn_pressed = intent.getStringExtra(BTN_PRESSED)
+
+        when (btn_pressed) {
+            "0" -> prepare1vs1()
+            "1" -> prepare1vsFriends()
+            "2" -> prepare1vsAI()
+        }
+    }
+
+    fun prepare1vs1() {
         setContentView(R.layout.activity_board1vs1)
+
+        var loadingDialog : LoadingDialog = LoadingDialog(this)
+        loadingDialog.startLoadingDialog()
+    }
+
+    fun prepare1vsFriends() {
+        setContentView(R.layout.activity_board1vs1)
+    }
+
+    fun prepare1vsAI() {
+        setContentView(R.layout.activity_board1vsai)
 
         recView1 = findViewById(R.id.rowP1)
         recView2 = findViewById(R.id.rowP2)
