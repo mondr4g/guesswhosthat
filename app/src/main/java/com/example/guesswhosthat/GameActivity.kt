@@ -1,5 +1,6 @@
 package com.example.guesswhosthat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -64,6 +65,10 @@ class GameActivity : AppCompatActivity() {
         session = LoginPref(this)
         user  = session.getUserDetails()
         val btn_pressed = intent.getStringExtra(BTN_PRESSED)
+
+        val mIntent = Intent()
+        mIntent.action="Battle"
+        sendBroadcast(mIntent)
 
         when (btn_pressed) {
             "0" -> prepare1vs1()
@@ -238,7 +243,17 @@ class GameActivity : AppCompatActivity() {
         chrono.setOnChronometerTickListener{
             changeData()
         }
+        chrono.start()
     }
+
+    /*@Override
+    override fun onStart(){
+        super.onStart()
+        chrono.setOnChronometerTickListener{
+            changeData()
+        }
+        chrono.start()
+    }*/
 
     fun generateCharacters() {
         val N : Int = 39
@@ -314,5 +329,6 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Characters.emptyCharsList()
+        chrono.stop()
     }
 }

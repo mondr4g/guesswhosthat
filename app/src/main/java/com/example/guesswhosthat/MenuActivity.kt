@@ -67,7 +67,7 @@ class MenuActivity : AppCompatActivity() {
 
         username.text = "Welcome " + user!!.get(LoginPref.KEY_USERNAME)
 
-        val intent = Intent(this@MenuActivity, MusicService::class.java)
+        val intent = Intent(applicationContext, MusicService::class.java)
         startService(intent)
 
         //Pa conectar a servidor de sockets
