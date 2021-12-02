@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 import android.graphics.Typeface
 import android.os.SystemClock
+import android.widget.Button
 import android.widget.Chronometer
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.guesswhosthat.Helpers.Characters
 import com.example.guesswhosthat.Helpers.PsjObj
 import android.widget.Chronometer.OnChronometerTickListener
-
+import android.app.Activity
 
 
 
@@ -29,6 +30,9 @@ class GameActivity : AppCompatActivity() {
     private lateinit var characters : Array<Int>
     private var bot : Int = 0
 
+    private lateinit var btn_guess1vsia : Button
+    private var GUESS : Boolean = false
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,7 @@ class GameActivity : AppCompatActivity() {
             "1" -> prepare1vsFriends()
             "2" -> prepare1vsAI()
         }
+
     }
 
     fun prepare1vs1() {
@@ -51,6 +56,8 @@ class GameActivity : AppCompatActivity() {
 
     fun prepare1vsFriends() {
         setContentView(R.layout.activity_board1vs1)
+        chrono = findViewById(R.id.chronos)
+
     }
 
     fun prepare1vsAI() {
@@ -66,10 +73,9 @@ class GameActivity : AppCompatActivity() {
         generateCharacters()
         Characters.getCharacters(characters, applicationContext)
 
-
         val p : MutableList<PsjObj> = Characters.getPersonajes()
 
-        Toast.makeText(applicationContext, p[0].personaje.nombre, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, p[0].personaje.nombre, Toast.LENGTH_SHORT).show()
 
         val data1 =
             Array(6) { i -> Character(p[i].personaje.nombre,p[i].resourceId) }
@@ -84,21 +90,13 @@ class GameActivity : AppCompatActivity() {
             Array(6) { i -> Character(p[i+18].personaje.nombre,p[i+18].resourceId) }
 
 
-        val adapter1 = CardAdapter(data1) {
+        val adapter1 = CardAdapter(data1) { }
 
-        }
+        val adapter2 = CardAdapter(data2) { }
 
-        val adapter2 = CardAdapter(data2) {
+        val adapter3 = CardAdapter(data3) { }
 
-        }
-
-        val adapter3 = CardAdapter(data3) {
-
-        }
-
-        val adapter4 = CardAdapter(data4) {
-
-        }
+        val adapter4 = CardAdapter(data4) { }
 
         recView1.setHasFixedSize(true)
         recView1.layoutManager =

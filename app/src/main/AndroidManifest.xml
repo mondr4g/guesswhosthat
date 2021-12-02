@@ -70,6 +70,14 @@
                 android:value=".MenuActivity" />
         </activity>
 
+        <activity android:name=".WaitingRoomActivity"
+            android:parentActivityName=".MenuActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MenuActivity" />
+        </activity>
+
         <service android:name=".bkgndmusic.MusicService"/>
     </application>
 

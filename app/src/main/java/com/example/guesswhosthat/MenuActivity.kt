@@ -1,5 +1,6 @@
 package com.example.guesswhosthat
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -37,10 +38,16 @@ class MenuActivity : AppCompatActivity() {
 
     private var user : HashMap<String, String>? = null
 
+    companion object {
+        lateinit var fa : Activity
+    }
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        fa = this
 
         session = LoginPref(this)
 
@@ -107,7 +114,7 @@ class MenuActivity : AppCompatActivity() {
         }
 
         btnFriends.setOnClickListener {
-            var i : Intent = Intent(applicationContext, GameActivity::class.java).apply {
+            var i : Intent = Intent(applicationContext, WaitingRoomActivity::class.java).apply {
                 putExtra(BTN_PRESSED, "1")
             }
             startActivity(i)
