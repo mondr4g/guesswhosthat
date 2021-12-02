@@ -2,7 +2,11 @@ package com.example.guesswhosthat
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
+import android.os.Handler
 import android.view.LayoutInflater
+import android.widget.TextView
+
 
 class LoadingDialog {
 
@@ -13,16 +17,25 @@ class LoadingDialog {
         activity = myActivity
     }
 
-    fun startLoadingDialog() {
+    fun startLoadingDialog(msj: String) {
         var builder : AlertDialog.Builder = AlertDialog.Builder(activity)
 
         var inflater : LayoutInflater = activity.layoutInflater
-        builder.setView(inflater.inflate(R.layout.custom_loading_dialog,null))
-        builder.setCancelable(true)
-
+        var view = inflater.inflate(R.layout.custom_loading_dialog,null)
+        view.findViewById<TextView>(R.id.txtDialogMsj).text = msj
+        builder.setView(view)
+        builder.setCancelable(false)
         dialog = builder.create()
         dialog.show()
+//        txtDialogMsj
+
     }
 
     fun dismissDialog() = dialog.dismiss()
+
+    fun delayedDismiss(time: Number){
+        val handler = Handler()
+        handler.postDelayed(Runnable { dialog.dismiss() }, time as Long)
+
+    }
 }

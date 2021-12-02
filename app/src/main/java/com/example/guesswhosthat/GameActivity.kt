@@ -9,12 +9,13 @@ import android.widget.Chronometer
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.guesswhosthat.Helpers.Characters
-import com.example.guesswhosthat.Helpers.PsjObj
 import android.widget.Chronometer.OnChronometerTickListener
-
-
-
+import com.example.guesswhosthat.Helpers.*
+import com.example.guesswhosthat.Models.GameBeginResponse
+import com.example.guesswhosthat.Models.GameInfoResponse
+import com.example.guesswhosthat.Session.LoginPref
+import okhttp3.ResponseBody
+import java.lang.Exception
 
 
 class GameActivity : AppCompatActivity() {
@@ -29,10 +30,19 @@ class GameActivity : AppCompatActivity() {
     private lateinit var characters : Array<Int>
     private var bot : Int = 0
 
+    //Loin preferences
+    lateinit var session : LoginPref
+
+    private var user : HashMap<String, String>? = null
+
+    //Response del servidor con la info del juego
+    private lateinit var gameInfo: GameBeginResponse
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        session = LoginPref(this)
+        user  = session.getUserDetails()
         val btn_pressed = intent.getStringExtra(BTN_PRESSED)
 
         when (btn_pressed) {
@@ -41,12 +51,45 @@ class GameActivity : AppCompatActivity() {
             "2" -> prepare1vsAI()
         }
     }
-
+    var loadingDialog : LoadingDialog = LoadingDialog(this)
     fun prepare1vs1() {
+        if(!NetworkUtil.isOnline(this)){
+            Toast.makeText(this,"No tienes conexion a internet!!", Toast.LENGTH_SHORT).show()
+            return
+        }
         setContentView(R.layout.activity_board1vs1)
+        chrono = findViewById(R.id.chronos)
+        chrono.setOnChronometerTickListener{
+            changeData()
+        }
 
-        var loadingDialog : LoadingDialog = LoadingDialog(this)
-        loadingDialog.startLoadingDialog()
+        SocketHandler.mSocket!!.on("waiting"){ args->
+            if (args[0] != null) {
+                runOnUiThread{
+                    val msj = args[0] as String
+                    loadingDialog.startLoadingDialog(msj)
+                    Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
+
+        SocketHandler.mSocket!!.on("BeginGame"){args->
+            if(args[0] != null){
+                runOnUiThread {
+                    try {
+                        gameInfo = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        chrono.start()
+                        loadingDialog.dismissDialog()
+                    }catch (e: Exception){
+                        Toast.makeText(this,"Ocurrio Un error!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
+
     }
 
     fun prepare1vsFriends() {
@@ -135,12 +178,12 @@ class GameActivity : AppCompatActivity() {
             chrono.text = "$hh:$mm:$ss"
         }
     }
-
+/*
     @Override
     override fun onStart(){
         super.onStart()
         chrono.start()
-    }
+    }*/
 
     fun generateCharacters() {
         val N : Int = 39
@@ -156,5 +199,22 @@ class GameActivity : AppCompatActivity() {
             Array(24) { i -> i+n1 }
 
         bot = (n1..n2).random()
+    }
+
+    fun changeData(){
+        val time = SystemClock.elapsedRealtime() - chrono.base
+        val h = (time / 3600000).toInt()
+        val m = (time - h * 3600000).toInt() / 60000
+        val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+        val hh = if (h < 10) "0$h" else h.toString() + ""
+        val mm = if (m < 10) "0$m" else m.toString() + ""
+        val ss = if (s < 10) "0$s" else s.toString() + ""
+        chrono.text = "$hh:$mm:$ss"
+    }
+
+    @Override
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Characters.emptyCharsList()
     }
 }
