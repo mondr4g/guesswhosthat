@@ -35,8 +35,14 @@ class GameActivity : AppCompatActivity() {
 
     private var user : HashMap<String, String>? = null
 
-    //Response del servidor con la info del juego
-    private lateinit var gameInfo: GameBeginResponse
+    //Mi personaje
+    private var myCharacter: Int = 0
+
+    //personajes
+    private lateinit var p : MutableList<PsjObj>
+
+    //Juego 1vs1
+    private lateinit var gameInfo1vs1: GameBeginResponse
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,11 +84,19 @@ class GameActivity : AppCompatActivity() {
             if(args[0] != null){
                 runOnUiThread {
                     try {
-                        gameInfo = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        //Almacenar la info del juego
+                        gameInfo1vs1  = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        //Aqui acomodar los usuarios que llegan en en el response
+                        generateCharacters()
+                        Characters.getCharacters(gameInfo1vs1.personajes, applicationContext)
+                        p = Characters.getPersonajes()
+                        //Aqui iniciar
                         chrono.start()
                         loadingDialog.dismissDialog()
+                        Toast.makeText(this,"El juego ha iniciado!!!!!!", Toast.LENGTH_SHORT).show()
                     }catch (e: Exception){
                         Toast.makeText(this,"Ocurrio Un error!", Toast.LENGTH_SHORT).show()
+                        SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
                     }
                 }
             }
