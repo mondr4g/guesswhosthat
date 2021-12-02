@@ -85,18 +85,20 @@ class MenuActivity : AppCompatActivity() {
                     if(id!=null){
                         val call = APIManager().getApiObj(this@MenuActivity).userLogout(id)
                         val body = call.body()
-                        if(call.isSuccessful){
-                            if(body!=null){
-                                Toast.makeText(this@MenuActivity, body.message, Toast.LENGTH_SHORT).show()
-
-                            }
-                        }else{
-                            try {
-                                Toast.makeText(this@MenuActivity, ErrorResponseHelper.getErrorMessage(call.errorBody()), Toast.LENGTH_LONG).show()
-                            } catch (e: Exception) {
-                                Toast.makeText(this@MenuActivity, e.message, Toast.LENGTH_LONG).show()
+                        runOnUiThread {
+                            if(call.isSuccessful){
+                                if(body!=null){
+                                    Toast.makeText(this@MenuActivity, body.message, Toast.LENGTH_SHORT).show()
+                                }
+                            }else{
+                                try {
+                                    Toast.makeText(this@MenuActivity, ErrorResponseHelper.getErrorMessage(call.errorBody()), Toast.LENGTH_LONG).show()
+                                } catch (e: Exception) {
+                                    Toast.makeText(this@MenuActivity, e.message, Toast.LENGTH_LONG).show()
+                                }
                             }
                         }
+
                     }
                 }
             }
