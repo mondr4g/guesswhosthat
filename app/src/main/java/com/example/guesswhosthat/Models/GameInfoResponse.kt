@@ -26,13 +26,13 @@ import com.google.gson.annotations.SerializedName
 
 data class GameInfoResponse(
     @SerializedName("_id") var id: String,
-    @SerializedName("player1") var p1: String,
-    @SerializedName("player2") var p2: String,
-    @SerializedName("winner") var win: String,
-    @SerializedName("loser") var ls: String,
-    @SerializedName("character1") var c1: String,
-    @SerializedName("character2") var c2: String,
-    @SerializedName("duration") var tiempo: String,
-    @SerializedName("finished") var fin: Boolean,
+    @SerializedName("player1") var player1: String,
+    @SerializedName("player2") var player2: String,
+    @SerializedName("winner") var winner: String,
+    @SerializedName("loser") var loser: String,
+    @SerializedName("character1") var character1: String,
+    @SerializedName("character2") var character2: String,
+    @SerializedName("duration") var duration: String,
+    @SerializedName("finished") var finished: Boolean,
     @SerializedName("chat") var chat: Array<ChatMessageResponse>
     )

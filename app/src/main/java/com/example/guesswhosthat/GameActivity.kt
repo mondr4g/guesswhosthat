@@ -1,10 +1,12 @@
 package com.example.guesswhosthat
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
+import android.graphics.Typeface
 import android.os.SystemClock
+import android.widget.Chronometer
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.Chronometer.OnChronometerTickListener
@@ -24,7 +26,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 import android.content.Intent
+import android.util.Log
 import android.widget.Button
+import com.example.guesswhosthat.Helpers.ParseHelper.parseChido
+import com.example.guesswhosthat.Models.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
+import java.beans.IndexedPropertyChangeEvent
 
 
 class GameActivity : AppCompatActivity() {
@@ -42,6 +53,9 @@ class GameActivity : AppCompatActivity() {
     private lateinit var btn_guess1vsia : Button
     private var GUESS : Boolean = false
 
+    //pal boton de abandono
+    private lateinit var btnAbandono : Button
+
     private lateinit var btn_sendMsg : Button
     private lateinit var popupChat : PopupWindow
 
@@ -58,6 +72,12 @@ class GameActivity : AppCompatActivity() {
 
     //Juego 1vs1
     private lateinit var gameInfo1vs1: GameBeginResponse
+
+    //Para los mensajes del whatsapp
+    private lateinit var mensajesDelWhats : ChatUpdateResponse
+
+    //para identificar que bonon se presiono.
+    private lateinit var btn_pressed: String
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,12 +113,15 @@ class GameActivity : AppCompatActivity() {
         chrono.setOnChronometerTickListener{
             changeData()
         }
-
+        btnAbandono = findViewById(R.id.btnAbandonar)
+        btnAbandono.setOnClickListener {
+            leftGame()
+        }
         SocketHandler.mSocket!!.on("waiting"){ args->
             if (args[0] != null) {
                 runOnUiThread{
                     val msj = args[0] as String
-                    //loadingDialog.startLoadingDialog(msj)
+                    loadingDialog.startLoadingDialog(msj)
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
 
                 }
@@ -110,7 +133,11 @@ class GameActivity : AppCompatActivity() {
                 runOnUiThread {
                     try {
                         //Almacenar la info del juego
-                        gameInfo1vs1  = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        //gameInfo1vs1  = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        val type = object : TypeToken<GameBeginResponse>() {}.type
+                        gameInfo1vs1 = parseChido<GameBeginResponse>(json = args[0].toString(), typeToken = type)
+
+
                         //Aqui acomodar los usuarios que llegan en en el response
                         characters = gameInfo1vs1.personajes
                         loadCards()
@@ -125,8 +152,6 @@ class GameActivity : AppCompatActivity() {
                 }
             }
         }
-
-        //SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
         SocketHandler.mSocket!!.on("win_abandono"){ args->
             if(args[0]!=null){
@@ -143,16 +168,74 @@ class GameActivity : AppCompatActivity() {
         }
 
         //Enviar respuesta de adivinacion
+        //realizar emicion de evento
 
-        //Falta cuando gana
+        //cuando gana
 
         //cuando pierde
 
         //enviar mensaje, va en el onclick del boton
+        //emitir evento: new_message
+        /*Enviar lo siguiente
+        data = {
+            var emisor = data.emisor
+            var receptor = data.receptor
+            var gameId = data.gameId
+            var msj = data.msj
+        }
+        * */
 
         //recepcion de mensaje
+        SocketHandler.mSocket!!.on("message_recived"){args->
+            /*data = args[0]
+            * {
+            * message: String,
+            * history: [{
+            *   emisor: String,
+                receptor: String,
+                msj: String,
+                fecha: String
+            * }]
+            * }
+            * */
 
-        //enviar abandono
+            if(args[0]!=null){
+                runOnUiThread {
+                    try {
+                        //Almacenar la info del juego
+                        val type = object : TypeToken<ChatUpdateResponse>() {}.type
+                        mensajesDelWhats = parseChido<ChatUpdateResponse>(json = args[0].toString(), typeToken = type)
+                        //mensajesDelWhats = ParseHelper.ParseGameInfo<ChatUpdateResponse>(args[0] as ResponseBody)
+                        //Aqui mostrar notificacion. o notificarle que llegaron los mensajes
+
+                    }catch (e: Exception){
+                        Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        }
+
+        //prueba de parametros
+        SocketHandler.mSocket!!.on("respuesta_serv"){args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    try{
+                        //AbandonoRequest
+                        val type = object : TypeToken<AbandonoResponse>() {}.type
+                        val result: AbandonoResponse = parseChido<AbandonoResponse>(json = args[0].toString(), typeToken = type)
+                        //var a = ParseHelper.ParseJsonObject<AbandonoResponse>(args[0].toString())
+                        Toast.makeText(this,result.toString(), Toast.LENGTH_SHORT).show()
+                        //Aqui lanzar el evento de que gano o lo que sea sepa la vrg
+                    }catch (e: Exception){
+                        e.message?.let { Log.d("TAG", it) }
+
+                        Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+        }
 
         SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
@@ -188,6 +271,7 @@ class GameActivity : AppCompatActivity() {
 
         chrono = findViewById(R.id.chronos)
 
+        generateCharacters()
         Characters.getCharacters(characters, applicationContext)
 
 
@@ -282,6 +366,75 @@ class GameActivity : AppCompatActivity() {
         chrono.text = "$hh:$mm:$ss"
     }
 
+    //funcion para EL BOTON DE ABANDONAR
+    fun leftGame(){
+        chrono.stop()
+        var duracion = chrono.text.toString()
+        when (btn_pressed) {
+            "2" -> {
+
+            }
+            else->{
+                //enviar abandono
+                /*
+                * var gameId = data.gameId
+                var winnerId = data.winnerId
+                var loserId = data.loserId
+                var duration = data.duration
+                * */
+                //var getLos = getOppositeId()
+                var userId = user!!.get(LoginPref.KEY_USERID).toString()
+                var d = AbandonoRequest(
+                    "aaaaaaa prra madre",
+                    //getLos,
+                    "Aqui voy perro",
+                    userId,
+                    duracion
+                )
+                //Asi se envia mierda por json
+                var dataa = Json.encodeToJsonElement(d)
+                SocketHandler.mSocket!!.emit("prueba_parametros", dataa)
+
+            }
+        }
+    }
+
+    private fun getOppositeId(): String {
+        val usI = user!!.get(LoginPref.KEY_USERID)
+        return if(usI == gameInfo1vs1.gameInfo.player1){
+            gameInfo1vs1.gameInfo.player2
+        }else{
+            gameInfo1vs1.gameInfo.player1
+        }
+    }
+
+    //para mensajes
+    private fun sendMessage(){
+        //recuperar el texto del input, cambiar
+
+        //prueba
+        var mensaje = "Prueba"
+
+        //actualizar valores
+        var id_emisor = user!!.get(LoginPref.KEY_USERID).toString()
+        var id_recptor = "UN wey X"
+        var id_game = "ID X"
+        if(gameInfo1vs1!=null){
+            id_recptor = getOppositeId()
+            id_game = gameInfo1vs1.gameInfo.id
+        }
+        var datMessage = NewMessageRequest(
+            emisor = id_emisor,
+            receptor = id_recptor,
+            gameId = id_game,
+            msj = mensaje
+        )
+
+        val dataa = Json.encodeToString(datMessage)
+        SocketHandler.mSocket!!.emit("new_message",dataa)
+    }
+
+
     fun showPopupChat() {
         // Inflate layout
         var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -329,6 +482,5 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Characters.emptyCharsList()
-        chrono.stop()
     }
 }

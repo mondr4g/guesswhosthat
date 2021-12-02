@@ -14,6 +14,6 @@ import java.util.*
 data class ChatMessageResponse(
     @SerializedName("sender") var emisor: String,
     @SerializedName("reciver") var receptor: String,
-    @SerializedName("message") var msj: String,
-    @SerializedName("date") var fecha: String
+    @SerializedName("message") var message: String,
+    @SerializedName("date") var date: String
     )

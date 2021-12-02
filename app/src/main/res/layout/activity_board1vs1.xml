@@ -17,12 +17,13 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/btnAbandonar"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/blue"
+            android:layout_marginRight="30dp"
             android:backgroundTint="@color/secondary"
             android:text="⬅️"
-            android:layout_marginRight="30dp"/>
+            android:textColor="@color/blue" />
 
         <Button
             android:id="@+id/btn_music1vs1"
