@@ -4,11 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 import android.graphics.Typeface
+import android.os.SystemClock
+import android.widget.Chronometer
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guesswhosthat.Helpers.Characters
 import com.example.guesswhosthat.Helpers.PsjObj
+import android.widget.Chronometer.OnChronometerTickListener
+
+
+
 
 
 class GameActivity : AppCompatActivity() {
@@ -17,6 +23,8 @@ class GameActivity : AppCompatActivity() {
     private lateinit var recView2 : RecyclerView
     private lateinit var recView3 : RecyclerView
     private lateinit var recView4 : RecyclerView
+
+    private lateinit var chrono: Chronometer
 
     private lateinit var characters : Array<Int>
     private var bot : Int = 0
@@ -52,6 +60,8 @@ class GameActivity : AppCompatActivity() {
         recView2 = findViewById(R.id.rowP2)
         recView3 = findViewById(R.id.rowP3)
         recView4 = findViewById(R.id.rowP4)
+
+        chrono = findViewById(R.id.chronos)
 
         generateCharacters()
         Characters.getCharacters(characters, applicationContext)
@@ -113,6 +123,23 @@ class GameActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recView4.adapter = adapter4
+
+        chrono.setOnChronometerTickListener{
+            val time = SystemClock.elapsedRealtime() - chrono.base
+            val h = (time / 3600000).toInt()
+            val m = (time - h * 3600000).toInt() / 60000
+            val s = (time - h * 3600000 - m * 60000).toInt() / 1000
+            val hh = if (h < 10) "0$h" else h.toString() + ""
+            val mm = if (m < 10) "0$m" else m.toString() + ""
+            val ss = if (s < 10) "0$s" else s.toString() + ""
+            chrono.text = "$hh:$mm:$ss"
+        }
+    }
+
+    @Override
+    override fun onStart(){
+        super.onStart()
+        chrono.start()
     }
 
     fun generateCharacters() {
