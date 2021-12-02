@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class GameBeginResponse(
     @SerializedName("gameInfo") var gameInfo: GameInfoResponse,
-    @SerializedName("characters") val personajes: ArrayList<Int>
+    @SerializedName("characters") val personajes: Array<Int>
 
     )
