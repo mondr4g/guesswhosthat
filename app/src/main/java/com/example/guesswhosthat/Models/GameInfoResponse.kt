@@ -33,5 +33,6 @@ data class GameInfoResponse(
     @SerializedName("character1") var c1: String,
     @SerializedName("character2") var c2: String,
     @SerializedName("duration") var tiempo: String,
-    @SerializedName("finished") var fin: Boolean
+    @SerializedName("finished") var fin: Boolean,
+    @SerializedName("chat") var chat: Array<ChatMessageResponse>
     )
