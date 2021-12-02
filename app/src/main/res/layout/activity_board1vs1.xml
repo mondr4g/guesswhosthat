@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg"
-    android:paddingHorizontal="30dp">
+    android:paddingHorizontal="30dp"
+    android:id="@+id/board">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,6 +110,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/send_msg"
                     android:layout_width="50dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
