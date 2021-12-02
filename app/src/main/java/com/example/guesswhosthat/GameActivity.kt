@@ -17,8 +17,7 @@ import com.example.guesswhosthat.Session.LoginPref
 import okhttp3.ResponseBody
 import java.lang.Exception
 import android.app.Activity
-
-
+import android.widget.Button
 
 
 class GameActivity : AppCompatActivity() {
