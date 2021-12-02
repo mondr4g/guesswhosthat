@@ -1,0 +1,21 @@
+{
+ "tez": ["palida", "clara", "bronceada", "obscura"],
+ "accesorios": "accesorios",
+ "genero": ["hombre", "mujer"],
+ "cabello":{
+   "color": ["negro", "cafe", "blanco", "rubio", "pelirojo", "calvo"],
+   "tamaño":["largo", "mediano", "corto", "calvo"],
+   "tipo": ["lacio", "Ondulado", "Rizado", "Afro", "Calvo"]
+ },
+ "rostro":{
+  "orejas":["grandes", "medianas", "pequeñas", "no visibles"],
+  "nariz": ["grande", "pequeña", "mediana"],
+  "labios":["Delgados", "Gruesos", "Grosor medio"],
+  "ojos": {
+   "color": ["cafe", "azul", "verde", "amarillo", "rojo", "bicolor", "negro", "blanco", "no visibles"], 
+   "tipo": ["normales", "grandes", "pequeños", "no visibles"]
+  },
+  "cejas": ["pobladas", "finas", "carentes", "nada"],
+  "tipo": ["ancho", "delgado", "intermedio"]
+ }
+}

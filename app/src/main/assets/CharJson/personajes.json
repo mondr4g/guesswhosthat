@@ -29,7 +29,7 @@
   "accesorios": "no",
   "genero": "hombre",
   "cabello":{
-    "color": "",
+    "color": "calvo",
     "tamaño": "calvo",
     "tipo": "calvo"
   },
@@ -61,7 +61,7 @@
    "nariz": "grande",
    "labios":"gruesos",
    "ojos": {
-    "color": "cafes",
+    "color": "cafe",
     "tipo": "pequeños"
    },
    "cejas": "carentes",
@@ -245,7 +245,7 @@
    "nariz": "pequeña",
    "labios":"delgados",
    "ojos": {
-    "color": "amarillos",
+    "color": "amarillo",
     "tipo": "pequeños"
    },
    "cejas": "pobladas",
@@ -705,7 +705,7 @@
    "nariz": "mediana",
    "labios":"grosor medio",
    "ojos": {
-    "color": "verdes",
+    "color": "verde",
     "tipo": "pequeños"
    },
    "cejas": "finas",
@@ -834,7 +834,7 @@
   "accesorios": "no",
   "genero": "hombre",
   "cabello":{
-    "color": "amarillo",
+    "color": "rubio",
     "tamaño": "largo",
     "tipo": "lacio"
   },
@@ -843,7 +843,7 @@
    "nariz": "pequeña",
    "labios":"delgados",
    "ojos": {
-    "color": "blancos",
+    "color": "blanco",
     "tipo": "grandes"
    },
    "cejas": "pobladas",
@@ -866,8 +866,8 @@
    "nariz": "mediana",
    "labios":"delgados",
    "ojos": {
-    "color": "amarillos",
-    "tipo": "normales"
+    "color": "amarillo",
+    "tipo": "no visibles"
    },
    "cejas": "carentes",
    "tipo": "anchura media"
@@ -880,7 +880,7 @@
   "accesorios": "si",
   "genero": "mujer",
   "cabello":{
-    "color": "",
+    "color": "calvo",
     "tamaño": "calvo",
     "tipo": "calvo"
   },
