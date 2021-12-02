@@ -17,6 +17,7 @@ import com.example.guesswhosthat.Session.LoginPref
 import okhttp3.ResponseBody
 import java.lang.Exception
 import android.app.Activity
+import android.content.Intent
 import android.widget.Button
 
 
@@ -107,6 +108,32 @@ class GameActivity : AppCompatActivity() {
                 }
             }
         }
+
+        SocketHandler.mSocket!!.on("win_abandono"){ args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    val msj = args[0] as String
+                    //loadingDialog.startLoadingDialog(msj)
+                    Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
+                    //Aqui realizar el avandono de la sala
+                    var i : Intent = Intent(applicationContext, MenuActivity::class.java)
+                    startActivity(i)
+                    finish()
+                }
+            }
+        }
+
+        //Enviar respuesta de adivinacion
+
+        //Falta cuando gana
+
+        //cuando pierde
+
+        //enviar mensaje, va en el onclick del boton
+
+        //recepcion de mensaje
+
+        //enviar abandono
 
         SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
