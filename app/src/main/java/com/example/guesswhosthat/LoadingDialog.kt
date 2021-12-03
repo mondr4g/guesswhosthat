@@ -27,15 +27,14 @@ class LoadingDialog {
         var btnCancel : TextView = view.findViewById(R.id.cancel_loading)
 
         btnCancel.setOnClickListener {
-            SocketHandler.mSocket!!.emit("no_se_armo",id)
+            // Cerrar Dialog
             dialog.dismiss()
-            GameActivity.fa.finish()
-
             // Cambiar musica Menu
             val mIntent = Intent()
             mIntent.action="Menu"
             MenuActivity.fa.sendBroadcast(mIntent)
-
+            GameActivity.fa.finish()
+            SocketHandler.mSocket!!.emit("no_se_armo",id)
         }
 
         view.findViewById<TextView>(R.id.txtDialogMsj).text = msj

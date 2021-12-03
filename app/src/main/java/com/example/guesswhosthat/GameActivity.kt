@@ -68,7 +68,6 @@ class GameActivity : AppCompatActivity() {
     private lateinit var popupClue: PopupWindow
 
     private lateinit var btn_guess1vsia : Button
-    private var GUESS : Boolean = false
 
     //pal boton de abandono
     private lateinit var btnAbandono : Button
@@ -101,8 +100,12 @@ class GameActivity : AppCompatActivity() {
     //pal socket
     private var mSocket: Socket? = null
 
+    // Personaje a adivinar
+    private lateinit var adivinarChar : PsjObj
+
     companion object {
         lateinit var fa : Activity
+        var GUESS : Boolean = false
     }
 
     @Override
@@ -333,7 +336,7 @@ catch (WindowManager.BadTokenException e) {
             }
         }
 
-        mSocket?.emit("new_game",user!!.get(LoginPref.KEY_USERID))
+        SocketHandler.mSocket?.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
         btn_sendMsg = findViewById(R.id.send_msg)
 
@@ -386,8 +389,21 @@ catch (WindowManager.BadTokenException e) {
     }
 
     fun prepare1vsAI() {
+        setContentView(R.layout.activity_board1vsai)
         generateCharacters()
         loadCards()
+        btn_guess1vsia = findViewById(R.id.btn_adivina1vs1)
+
+        btn_guess1vsia.setOnClickListener {
+            GUESS = true
+        }
+
+        for (c in p) {
+            if (c.personaje.id == bot) {
+                adivinarChar = c
+                Toast.makeText(applicationContext, "Te encontre" + adivinarChar.personaje.nombre, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 /*
     @Override
@@ -430,13 +446,61 @@ catch (WindowManager.BadTokenException e) {
             Array(6) { i -> Character(p[i+18].personaje.nombre,p[i+18].resourceId) }
 
 
-        val adapter1 = CardAdapter(data1) { }
+        val adapter1 = CardAdapter(data1) {
+            Toast.makeText(applicationContext, "aqui ando", Toast.LENGTH_SHORT).show()
+            if (GUESS) {
+                if (it.name == adivinarChar.personaje.nombre) {
+                    Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+                else {
+                    Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+            }
+        }
 
-        val adapter2 = CardAdapter(data2) { }
+        val adapter2 = CardAdapter(data2) {
+            Toast.makeText(applicationContext, "aqui ando", Toast.LENGTH_SHORT).show()
+            if (GUESS) {
+                if (it.name == adivinarChar.personaje.nombre) {
+                    Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+                else {
+                    Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+            }
+        }
 
-        val adapter3 = CardAdapter(data3) { }
+        val adapter3 = CardAdapter(data3) {
+            Toast.makeText(applicationContext, "aqui ando", Toast.LENGTH_SHORT).show()
+            if (GUESS) {
+                if (it.name == adivinarChar.personaje.nombre) {
+                    Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+                else {
+                    Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+            }
+        }
 
-        val adapter4 = CardAdapter(data4) { }
+        val adapter4 = CardAdapter(data4) {
+            Toast.makeText(applicationContext, "aqui ando", Toast.LENGTH_SHORT).show()
+            if (GUESS) {
+                if (it.name == adivinarChar.personaje.nombre) {
+                    Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+                else {
+                    Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
+                    GUESS = false
+                }
+            }
+        }
 
         recView1.setHasFixedSize(true)
         recView1.layoutManager =
