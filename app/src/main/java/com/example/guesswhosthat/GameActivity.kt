@@ -241,7 +241,7 @@ catch (WindowManager.BadTokenException e) {
             if(args[0]!=null){
                 runOnUiThread {
                     val msj = args[0] as String
-                    //loadingDialog.startLoadingDialog(msj)
+                    //loadingDialog.startLoadingDialog()
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
                     //Aqui realizar el avandono de la sala
                     var i : Intent = Intent(applicationContext, MenuActivity::class.java)
@@ -393,9 +393,14 @@ catch (WindowManager.BadTokenException e) {
         generateCharacters()
         loadCards()
         btn_guess1vsia = findViewById(R.id.btn_adivina1vs1)
+        clueBtn = findViewById(R.id.clue_btn)
 
         btn_guess1vsia.setOnClickListener {
             GUESS = true
+        }
+
+        clueBtn.setOnClickListener {
+            launchCluePop()
         }
 
         for (c in p) {
@@ -418,7 +423,6 @@ catch (WindowManager.BadTokenException e) {
         recView3 = findViewById(R.id.rowP3)
         recView4 = findViewById(R.id.rowP4)
 
-        clueBtn = findViewById(R.id.clue_btn)
 
         btnMusik = findViewById(R.id.btn_music1vs1)
 
@@ -528,10 +532,6 @@ catch (WindowManager.BadTokenException e) {
 
         btnMusik.setOnClickListener {
             changeMusicState()
-        }
-
-        clueBtn.setOnClickListener {
-            launchCluePop()
         }
 
         chrono.setOnChronometerTickListener{
