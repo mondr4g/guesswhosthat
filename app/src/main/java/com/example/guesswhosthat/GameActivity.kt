@@ -37,7 +37,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import java.beans.IndexedPropertyChangeEvent
 
-
 class GameActivity : AppCompatActivity() {
 
     private lateinit var recView1 : RecyclerView
@@ -58,6 +57,7 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var btn_sendMsg : Button
     private lateinit var popupChat : PopupWindow
+    private lateinit var message : EditText
 
     //Loin preferences
     lateinit var session : LoginPref
@@ -79,9 +79,14 @@ class GameActivity : AppCompatActivity() {
     //para identificar que bonon se presiono.
     private lateinit var btn_pressed: String
 
+    companion object {
+        lateinit var fa : Activity
+    }
+
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         session = LoginPref(this)
         user  = session.getUserDetails()
         val btn_pressed = intent.getStringExtra(BTN_PRESSED)
@@ -107,7 +112,11 @@ class GameActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_board1vs1)
 
+        fa = this
+
         btn_sendMsg = findViewById(R.id.send_msg)
+
+        message = findViewById(R.id.chat_1vs1)
 
         chrono = findViewById(R.id.chronos)
         chrono.setOnChronometerTickListener{
@@ -123,7 +132,6 @@ class GameActivity : AppCompatActivity() {
                     val msj = args[0] as String
                     loadingDialog.startLoadingDialog(msj)
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
-
                 }
             }
         }
@@ -205,6 +213,7 @@ class GameActivity : AppCompatActivity() {
                         //Almacenar la info del juego
                         val type = object : TypeToken<ChatUpdateResponse>() {}.type
                         mensajesDelWhats = parseChido<ChatUpdateResponse>(json = args[0].toString(), typeToken = type)
+                        showPopupChat()
                         //mensajesDelWhats = ParseHelper.ParseGameInfo<ChatUpdateResponse>(args[0] as ResponseBody)
                         //Aqui mostrar notificacion. o notificarle que llegaron los mensajes
 
@@ -247,7 +256,6 @@ class GameActivity : AppCompatActivity() {
     fun prepare1vsFriends() {
         setContentView(R.layout.activity_board1vs1)
         chrono = findViewById(R.id.chronos)
-
     }
 
     fun prepare1vsAI() {
@@ -411,9 +419,11 @@ class GameActivity : AppCompatActivity() {
     //para mensajes
     private fun sendMessage(){
         //recuperar el texto del input, cambiar
+        var mensaje = message.text.toString()
 
-        //prueba
-        var mensaje = "Prueba"
+        if (message == null) {
+            return
+        }
 
         //actualizar valores
         var id_emisor = user!!.get(LoginPref.KEY_USERID).toString()
@@ -442,16 +452,11 @@ class GameActivity : AppCompatActivity() {
 
         var recViewChat : RecyclerView = popupView.findViewById(R.id.chat)
 
-        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        val currentDate = sdf.format(Date())
+//        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+//        val currentDate = sdf.format(Date())
 
         val dataMsg =
-            Array(10) { i ->
-            if (i % 2 == 0)
-                UserMsg("Emisor", 1,currentDate)
-            else
-                UserMsg("Remitente", 0,currentDate)
-            }
+            Array(mensajesDelWhats.history.size) { i ->  UserMsg(mensajesDelWhats.history[i].message, mensajesDelWhats.history[i].emisor, mensajesDelWhats.history[i].date) }
 
         val adapterMsg = UserMsgAdapter(dataMsg) { }
 
@@ -482,5 +487,6 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Characters.emptyCharsList()
+        chrono.stop()
     }
 }

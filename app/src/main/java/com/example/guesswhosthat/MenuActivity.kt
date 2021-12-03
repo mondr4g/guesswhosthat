@@ -3,10 +3,13 @@ package com.example.guesswhosthat
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.guesswhosthat.Helpers.ErrorResponseHelper
 import com.example.guesswhosthat.Helpers.NetworkUtil
 import com.example.guesswhosthat.Helpers.SocketHandler
@@ -18,6 +21,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 const val BTN_PRESSED = "com.example.guesswhosthat.BTNPRESSED"
 
@@ -37,6 +43,10 @@ class MenuActivity : AppCompatActivity() {
     lateinit var session : LoginPref
 
     private var user : HashMap<String, String>? = null
+
+    private lateinit var popupProfile : PopupWindow
+    private lateinit var btnProfile : Button
+    private lateinit var btnCloseProfile : Button
 
     companion object {
         lateinit var fa : Activity
@@ -60,6 +70,7 @@ class MenuActivity : AppCompatActivity() {
         btn1vs1 = findViewById(R.id.btn_1vs1)
         btnFriends = findViewById(R.id.btn_playFriends)
         btn1vsAI = findViewById(R.id.btn_1vsia)
+        btnProfile = findViewById(R.id.profile)
 
         session.checkLogin()
 
@@ -129,6 +140,10 @@ class MenuActivity : AppCompatActivity() {
             startActivity(i)
         }
 
+        btnProfile.setOnClickListener {
+            showPopupProfile()
+        }
+
     }
 
     private fun connectSocket(){
@@ -180,6 +195,37 @@ class MenuActivity : AppCompatActivity() {
     fun disconnectSocket() {
         SocketHandler.mSocket?.emit("user_off",user!!.get(LoginPref.KEY_USERID) )
     }
+
+    fun showPopupProfile() {
+        // Inflate layout
+        var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var popupView = inflater.inflate(R.layout.popup_profile,null)
+
+        // Create popup chat
+        var w : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var h : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var focusable : Boolean = true
+
+        var user_name : TextView = popupView.findViewById(R.id.user_name)
+        var user_id : TextView = popupView.findViewById(R.id.user_id)
+
+        user_name.text = user!!.get(LoginPref.KEY_USERNAME)
+        user_id.text = user!!.get(LoginPref.KEY_USERID)
+
+        popupProfile = PopupWindow(popupView,w,h,focusable)
+
+        var view : ConstraintLayout = findViewById(R.id.menu)
+        popupProfile.showAtLocation(view, Gravity.CENTER, 0, 0)
+
+        btnCloseProfile = popupView.findViewById(R.id.btn_closeProfile)
+
+        // dismiss the popup window when touched
+        btnCloseProfile.setOnClickListener {
+            popupProfile.dismiss()
+            true
+        }
+    }
+
 
     // Exit Application
     @Override

@@ -22,13 +22,18 @@ class LoadingDialog {
 
         var inflater : LayoutInflater = activity.layoutInflater
         var view = inflater.inflate(R.layout.custom_loading_dialog,null)
+        var btnCancel : TextView = view.findViewById(R.id.cancel_loading)
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+            GameActivity.fa.finish()
+        }
+
         view.findViewById<TextView>(R.id.txtDialogMsj).text = msj
         builder.setView(view)
         builder.setCancelable(false)
         dialog = builder.create()
         dialog.show()
-//        txtDialogMsj
-
     }
 
     fun dismissDialog() = dialog.dismiss()
