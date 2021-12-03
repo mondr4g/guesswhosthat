@@ -3,6 +3,7 @@ package com.example.guesswhosthat
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.TextView
@@ -29,11 +30,18 @@ class LoadingDialog {
             SocketHandler.mSocket!!.emit("no_se_armo",id)
             dialog.dismiss()
             GameActivity.fa.finish()
+
+            // Cambiar musica Menu
+            val mIntent = Intent()
+            mIntent.action="Menu"
+            MenuActivity.fa.sendBroadcast(mIntent)
+            // Terminar Game
+            GameActivity.fa.finish()
         }
 
         view.findViewById<TextView>(R.id.txtDialogMsj).text = msj
         builder.setView(view)
-        builder.setCancelable(false)
+        builder.setCancelable(true)
         dialog = builder.create()
         dialog.show()
     }
