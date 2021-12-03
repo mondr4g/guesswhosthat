@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">GWT?</string>
     <string name="drackode">drackode ©</string>
+    <string name="win_msj">Flicidades Ganaste!!!!</string>
+    <string name="los_msj">Sigue practicando :(</string>
+    <string name="winbtn">Aceptar WUU</string>
+    <string name="losbtn">Da igual :(</string>
     <string name="placeholder">placeholder</string>
 </resources>

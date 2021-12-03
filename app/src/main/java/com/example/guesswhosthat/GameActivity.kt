@@ -28,8 +28,10 @@ import kotlin.collections.HashMap
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.example.guesswhosthat.Helpers.ParseHelper.parseChido
 import com.example.guesswhosthat.Models.*
+import com.example.guesswhosthat.Session.CustomWinDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.serialization.encodeToString
@@ -110,6 +112,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     var loadingDialog : LoadingDialog = LoadingDialog(this)
+    var customResultDialog: CustomWinDialog = CustomWinDialog(this)
 
     fun prepare1vs1() {
         if(!NetworkUtil.isOnline(this)){
@@ -144,7 +147,7 @@ class GameActivity : AppCompatActivity() {
             if (args[0] != null) {
                 runOnUiThread{
                     val msj = args[0] as String
-                    loadingDialog.startLoadingDialog(msj)
+                    loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -189,12 +192,20 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
+        /*Faltan estos 3*/
         //Enviar respuesta de adivinacion
-        //realizar emicion de evento
+        //realizar emission de evento
 
         //cuando gana
+        SocketHandler.mSocket!!.on("you_win"){args->
+            customResultDialog.startLoadingDialog(true)
+        }
 
         //cuando pierde
+        SocketHandler.mSocket!!.on("you_lose"){args->
+            customResultDialog.startLoadingDialog(false)
+        }
+
 
         //enviar mensaje, va en el onclick del boton
         //emitir evento: new_message
@@ -331,6 +342,8 @@ class GameActivity : AppCompatActivity() {
             Array(6) { i -> Character(p[i+18].personaje.nombre,p[i+18].resourceId) }
 
 
+
+
         val adapter1 = CardAdapter(data1) { }
 
         val adapter2 = CardAdapter(data2) { }
@@ -371,6 +384,10 @@ class GameActivity : AppCompatActivity() {
             changeData()
         }
         chrono.start()
+    }
+
+    fun sendAswer(){
+
     }
 
     fun changeMusicState(){
@@ -434,33 +451,55 @@ class GameActivity : AppCompatActivity() {
     fun leftGame(){
         chrono.stop()
         var duracion = chrono.text.toString()
-        when (btn_pressed) {
-            "2" -> {
-
+        val dialogAbandono = AlertDialog.Builder(this)
+            .setTitle("Que perdedor")
+            .setMessage("Seguro que quieres salir de la partida?")
+            .setNegativeButton("Cancel") { view, _ ->
+                finish()
             }
-            else->{
-                //enviar abandono
-                /*
-                * var gameId = data.gameId
-                var winnerId = data.winnerId
-                var loserId = data.loserId
-                var duration = data.duration
-                * */
-                //var getLos = getOppositeId()
-                var userId = user!!.get(LoginPref.KEY_USERID).toString()
-                var d = AbandonoRequest(
-                    "aaaaaaa prra madre",
-                    //getLos,
-                    "Aqui voy perro",
-                    userId,
-                    duracion
-                )
-                //Asi se envia mierda por json
-                var dataa = Json.encodeToJsonElement(d)
-                SocketHandler.mSocket!!.emit("prueba_parametros", dataa)
+            .setPositiveButton("Accept") { view, _ ->
+                when (btn_pressed) {
+                    "2" -> {
+                        runOnUiThread {
+                            Toast.makeText(this,"Bye felicia!!", Toast.LENGTH_SHORT).show()
+                        }
+                        finish()
+                    }
+                    else->{
+                        //enviar abandono
+                        /*
+                        * var gameId = data.gameId
+                        var winnerId = data.winnerId
+                        var loserId = data.loserId
+                        var duration = data.duration
+                        * */
+                        //var getLos = getOppositeId()
+                        val userId = user!!.get(LoginPref.KEY_USERID).toString()
+                        var id_game = "ID X"
+                        var winId = "ID X"
+                        if(gameInfo1vs1!=null){
+                            winId = getOppositeId()
+                            id_game = gameInfo1vs1.gameInfo.id
+                        }
+                        val d = AbandonoRequest(
+                            id_game,
+                            winId,
+                            userId,
+                            duracion
+                        )
+                        //Asi se envia mierda por json
+                        val dataa = Json.encodeToJsonElement(d)
+                        SocketHandler.mSocket!!.emit("prueba_parametros", dataa)
 
+                        finish()
+                    }
+                }
             }
-        }
+            .setCancelable(false)
+            .create()
+
+        dialogAbandono.show()
+
     }
 
     private fun getOppositeId(): String {

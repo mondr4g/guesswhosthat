@@ -187,7 +187,8 @@ class MenuActivity : AppCompatActivity() {
                     //val msj = args[0] as String
                     runOnUiThread{
                         val msj = args[0]
-                        Toast.makeText(this,"Si llego este wey", Toast.LENGTH_SHORT).show()
+                        //Aqui pediente de la actualizacion de la lista de usuarios
+                        Toast.makeText(this,"Welcome", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

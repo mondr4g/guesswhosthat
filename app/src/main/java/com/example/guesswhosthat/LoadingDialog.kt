@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.TextView
+import com.example.guesswhosthat.Helpers.SocketHandler
 
 
 class LoadingDialog {
@@ -17,7 +18,7 @@ class LoadingDialog {
         activity = myActivity
     }
 
-    fun startLoadingDialog(msj: String) {
+    fun startLoadingDialog(msj: String, id: String) {
         var builder : AlertDialog.Builder = AlertDialog.Builder(activity)
 
         var inflater : LayoutInflater = activity.layoutInflater
@@ -25,6 +26,7 @@ class LoadingDialog {
         var btnCancel : TextView = view.findViewById(R.id.cancel_loading)
 
         btnCancel.setOnClickListener {
+            SocketHandler.mSocket!!.emit("no_se_armo",id)
             dialog.dismiss()
             GameActivity.fa.finish()
         }
