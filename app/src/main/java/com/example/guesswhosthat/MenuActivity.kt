@@ -114,6 +114,11 @@ class MenuActivity : AppCompatActivity() {
                 }
             }
             session.LogoutUser()
+
+            val mIntent = Intent()
+            mIntent.action="Stop"
+            sendBroadcast(mIntent)
+
             finish()
         }
 
@@ -190,6 +195,20 @@ class MenuActivity : AppCompatActivity() {
             mSocket?.emit("new_user",user!!.get(LoginPref.KEY_USERID))
         }
 
+    }
+
+    override fun onPause(){
+        super.onPause()
+        val mIntent = Intent()
+        mIntent.action="Pause"
+        sendBroadcast(mIntent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mIntent = Intent()
+        mIntent.action="Resume"
+        sendBroadcast(mIntent)
     }
 
     fun disconnectSocket() {

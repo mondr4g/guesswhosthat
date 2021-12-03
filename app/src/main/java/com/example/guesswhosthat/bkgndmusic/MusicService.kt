@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.os.IBinder
+import java.lang.IllegalArgumentException
 
 class MusicService : Service() {
     internal lateinit var player: MediaPlayer
@@ -88,9 +89,13 @@ class MusicService : Service() {
     }
 
     override fun onDestroy() {
-        player.stop()
         player.release()
-        unregisterReceiver(musicReciver)
+        try {
+            unregisterReceiver(musicReciver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+        stopSelf()
     }
 
     override fun onLowMemory() {

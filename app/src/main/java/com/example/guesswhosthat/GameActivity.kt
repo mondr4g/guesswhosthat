@@ -46,6 +46,9 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var chrono: Chronometer
 
+    private lateinit var btnMusik: Button
+    private var muted: Boolean = false
+
     private lateinit var characters : Array<Int>
     private var bot : Int = 0
 
@@ -117,6 +120,11 @@ class GameActivity : AppCompatActivity() {
         btn_sendMsg = findViewById(R.id.send_msg)
 
         message = findViewById(R.id.chat_1vs1)
+
+        btnMusik = findViewById(R.id.btn_music1vs1)
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
 
         chrono = findViewById(R.id.chronos)
         chrono.setOnChronometerTickListener{
@@ -256,6 +264,16 @@ class GameActivity : AppCompatActivity() {
     fun prepare1vsFriends() {
         setContentView(R.layout.activity_board1vs1)
         chrono = findViewById(R.id.chronos)
+        btnMusik = findViewById(R.id.btn_music1vs1)
+
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
+        chrono.setOnChronometerTickListener{
+            changeData()
+        }
+        chrono.start()
+
     }
 
     fun prepare1vsAI() {
@@ -277,10 +295,13 @@ class GameActivity : AppCompatActivity() {
         recView3 = findViewById(R.id.rowP3)
         recView4 = findViewById(R.id.rowP4)
 
+        btnMusik = findViewById(R.id.btn_music1vs1)
+
         chrono = findViewById(R.id.chronos)
 
+        Questions.getPregs(applicationContext)
+        Characters.getCharacters(characters, applicationContext, bot)
         generateCharacters()
-        Characters.getCharacters(characters, applicationContext)
 
 
         p  = Characters.getPersonajes()
@@ -332,10 +353,35 @@ class GameActivity : AppCompatActivity() {
 
         recView4.adapter = adapter4
 
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
+
         chrono.setOnChronometerTickListener{
             changeData()
         }
         chrono.start()
+    }
+
+    fun changeMusicState(){
+        if(muted) {
+            resume()
+            muted = false
+        }else {
+            pause()
+            muted = true
+        }
+    }
+
+    fun pause(){
+        val mIntent = Intent()
+        mIntent.action="Pause"
+        sendBroadcast(mIntent)
+    }
+    fun resume(){
+        val mIntent = Intent()
+        mIntent.action="Resume"
+        sendBroadcast(mIntent)
     }
 
     /*@Override
@@ -487,6 +533,22 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Characters.emptyCharsList()
+
+        val mIntent = Intent()
+        mIntent.action="Menu"
+        sendBroadcast(mIntent)
+
         chrono.stop()
     }
+
+    override fun onPause(){
+        super.onPause()
+        pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resume()
+    }
+
 }
