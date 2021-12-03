@@ -28,8 +28,10 @@ import kotlin.collections.HashMap
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.example.guesswhosthat.Helpers.ParseHelper.parseChido
 import com.example.guesswhosthat.Models.*
+import com.example.guesswhosthat.Session.CustomWinDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.serialization.encodeToString
@@ -46,6 +48,9 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var chrono: Chronometer
 
+    private lateinit var btnMusik: Button
+    private var muted: Boolean = false
+
     private lateinit var characters : Array<Int>
 
     // Character 1vsAI
@@ -57,6 +62,8 @@ class GameActivity : AppCompatActivity() {
     // Character getCharacters()
     private var idChar : Int = 0
 
+    private lateinit var popupPerson: Button
+
     private lateinit var btn_guess1vsia : Button
     private var GUESS : Boolean = false
 
@@ -65,6 +72,7 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var btn_sendMsg : Button
     private lateinit var popupChat : PopupWindow
+    private lateinit var popupChar : PopupWindow
     private lateinit var message : EditText
 
     //Loin preferences
@@ -112,6 +120,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     var loadingDialog : LoadingDialog = LoadingDialog(this)
+    var customResultDialog: CustomWinDialog = CustomWinDialog(this)
 
     fun prepare1vs1() {
         if(!NetworkUtil.isOnline(this)){
@@ -124,7 +133,15 @@ class GameActivity : AppCompatActivity() {
 
         btn_sendMsg = findViewById(R.id.send_msg)
 
+        popupPerson = findViewById(R.id.btn_poperson)
+        popupPerson.setOnClickListener { showPopupInfo() }
+
         message = findViewById(R.id.chat_1vs1)
+
+        btnMusik = findViewById(R.id.btn_music1vs1)
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
 
         chrono = findViewById(R.id.chronos)
         chrono.setOnChronometerTickListener{
@@ -138,7 +155,7 @@ class GameActivity : AppCompatActivity() {
             if (args[0] != null) {
                 runOnUiThread{
                     val msj = args[0] as String
-                    loadingDialog.startLoadingDialog(msj)
+                    loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -197,12 +214,20 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
+        /*Faltan estos 3*/
         //Enviar respuesta de adivinacion
-        //realizar emicion de evento
+        //realizar emission de evento
 
         //cuando gana
+        SocketHandler.mSocket!!.on("you_win"){args->
+            customResultDialog.startLoadingDialog(true)
+        }
 
         //cuando pierde
+        SocketHandler.mSocket!!.on("you_lose"){args->
+            customResultDialog.startLoadingDialog(false)
+        }
+
 
         //enviar mensaje, va en el onclick del boton
         //emitir evento: new_message
@@ -278,6 +303,19 @@ class GameActivity : AppCompatActivity() {
     fun prepare1vsFriends() {
         setContentView(R.layout.activity_board1vs1)
         chrono = findViewById(R.id.chronos)
+        btnMusik = findViewById(R.id.btn_music1vs1)
+
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
+        chrono.setOnChronometerTickListener{
+            changeData()
+        }
+        chrono.start()
+
+        popupPerson = findViewById(R.id.btn_poperson)
+        popupPerson.setOnClickListener { showPopupInfo() }
+
     }
 
     fun prepare1vsAI() {
@@ -299,8 +337,11 @@ class GameActivity : AppCompatActivity() {
         recView3 = findViewById(R.id.rowP3)
         recView4 = findViewById(R.id.rowP4)
 
+        btnMusik = findViewById(R.id.btn_music1vs1)
+
         chrono = findViewById(R.id.chronos)
 
+        Questions.getPregs(applicationContext)
         generateCharacters()
         Characters.getCharacters(characters, applicationContext, idChar)
 
@@ -354,10 +395,39 @@ class GameActivity : AppCompatActivity() {
 
         recView4.adapter = adapter4
 
+        btnMusik.setOnClickListener {
+            changeMusicState()
+        }
+
         chrono.setOnChronometerTickListener{
             changeData()
         }
         chrono.start()
+    }
+
+    fun sendAswer(){
+
+    }
+
+    fun changeMusicState(){
+        if(muted) {
+            resume()
+            muted = false
+        }else {
+            pause()
+            muted = true
+        }
+    }
+
+    fun pause(){
+        val mIntent = Intent()
+        mIntent.action="Pause"
+        sendBroadcast(mIntent)
+    }
+    fun resume(){
+        val mIntent = Intent()
+        mIntent.action="Resume"
+        sendBroadcast(mIntent)
     }
 
     /*@Override
@@ -401,33 +471,55 @@ class GameActivity : AppCompatActivity() {
     fun leftGame(){
         chrono.stop()
         var duracion = chrono.text.toString()
-        when (btn_pressed) {
-            "2" -> {
-
+        val dialogAbandono = AlertDialog.Builder(this)
+            .setTitle("Que perdedor")
+            .setMessage("Seguro que quieres salir de la partida?")
+            .setNegativeButton("Cancel") { view, _ ->
+                finish()
             }
-            else->{
-                //enviar abandono
-                /*
-                * var gameId = data.gameId
-                var winnerId = data.winnerId
-                var loserId = data.loserId
-                var duration = data.duration
-                * */
-                //var getLos = getOppositeId()
-                var userId = user!!.get(LoginPref.KEY_USERID).toString()
-                var d = AbandonoRequest(
-                    "aaaaaaa prra madre",
-                    //getLos,
-                    "Aqui voy perro",
-                    userId,
-                    duracion
-                )
-                //Asi se envia mierda por json
-                var dataa = Json.encodeToJsonElement(d)
-                SocketHandler.mSocket!!.emit("prueba_parametros", dataa)
+            .setPositiveButton("Accept") { view, _ ->
+                when (btn_pressed) {
+                    "2" -> {
+                        runOnUiThread {
+                            Toast.makeText(this,"Bye felicia!!", Toast.LENGTH_SHORT).show()
+                        }
+                        finish()
+                    }
+                    else->{
+                        //enviar abandono
+                        /*
+                        * var gameId = data.gameId
+                        var winnerId = data.winnerId
+                        var loserId = data.loserId
+                        var duration = data.duration
+                        * */
+                        //var getLos = getOppositeId()
+                        val userId = user!!.get(LoginPref.KEY_USERID).toString()
+                        var id_game = "ID X"
+                        var winId = "ID X"
+                        if(gameInfo1vs1!=null){
+                            winId = getOppositeId()
+                            id_game = gameInfo1vs1.gameInfo.id
+                        }
+                        val d = AbandonoRequest(
+                            id_game,
+                            winId,
+                            userId,
+                            duracion
+                        )
+                        //Asi se envia mierda por json
+                        val dataa = Json.encodeToJsonElement(d)
+                        SocketHandler.mSocket!!.emit("prueba_parametros", dataa)
 
+                        finish()
+                    }
+                }
             }
-        }
+            .setCancelable(false)
+            .create()
+
+        dialogAbandono.show()
+
     }
 
     private fun getOppositeId(): String {
@@ -467,6 +559,59 @@ class GameActivity : AppCompatActivity() {
         SocketHandler.mSocket!!.emit("new_message",dataa)
     }
 
+    fun showPopupInfo(){
+        // Inflate layout
+        var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var popupView = inflater.inflate(R.layout.popup_character,null)
+
+        val pic: ImageView = popupView.findViewById(R.id.char_pic)
+        val name: TextView = popupView.findViewById(R.id.pop_name)
+        val gend: TextView = popupView.findViewById(R.id.pop_gen)
+        val skin: TextView = popupView.findViewById(R.id.pop_tez)
+        val acce: TextView = popupView.findViewById(R.id.pop_acc)
+        val hcol: TextView = popupView.findViewById(R.id.pop_hairCol)
+        val hsiz: TextView = popupView.findViewById(R.id.pop_hairSiz)
+        val htpe: TextView = popupView.findViewById(R.id.pop_hairTpe)
+        val ears: TextView = popupView.findViewById(R.id.pop_ears)
+        val nose: TextView = popupView.findViewById(R.id.pop_nose)
+        val lips: TextView = popupView.findViewById(R.id.pop_lips)
+        val ecol: TextView = popupView.findViewById(R.id.pop_eyeCol)
+        val etpe: TextView = popupView.findViewById(R.id.pop_eyeTpe)
+        val brow: TextView = popupView.findViewById(R.id.pop_brows)
+        val face: TextView = popupView.findViewById(R.id.pop_faceTpe)
+
+        val player = Characters.getPlayerChar()
+
+        pic.setImageResource(player.resourceId)
+        name.text = player.personaje.nombre
+        gend.text = "Genero: " + player.personaje.genero
+        skin.text = "Tez: " + player.personaje.tez
+        acce.text = "Accesorios: " + player.personaje.accesorios
+        hcol.text = "Color de cabello: " + player.personaje.cabello.color
+        hsiz.text = "Tamaño de cabello: " + player.personaje.cabello.tamaño
+        htpe.text = "Tipo de cabello: " + player.personaje.cabello.tipo
+        ears.text = "Orejas: " + player.personaje.rostro.orejas
+        nose.text = "Tipo de nariz: " + player.personaje.rostro.nariz
+        lips.text = "Tipo de labios: " + player.personaje.rostro.labios
+        ecol.text = "Color de ojos: " + player.personaje.rostro.ojos.color
+        etpe.text = "Ojos: " + player.personaje.rostro.ojos.tipo
+        brow.text = "Cejas: " + player.personaje.rostro.cejas
+        face.text = "Tipo de rostro: " + player.personaje.rostro.tipo
+
+        // Create popup
+        var w : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var h : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var focusable : Boolean = true
+        popupChar = PopupWindow(popupView,w,h,focusable)
+
+        var view : LinearLayout = findViewById(R.id.board)
+        popupChar.showAtLocation(view, Gravity.CENTER, 0, 0);
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener { v, event ->
+            popupChar.dismiss()
+            true
+        }
+    }
 
     fun showPopupChat() {
         // Inflate layout
@@ -510,6 +655,22 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Characters.emptyCharsList()
+
+        val mIntent = Intent()
+        mIntent.action="Menu"
+        sendBroadcast(mIntent)
+
         chrono.stop()
     }
+
+    override fun onPause(){
+        super.onPause()
+        pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resume()
+    }
+
 }

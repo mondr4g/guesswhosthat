@@ -44,8 +44,9 @@ data class PsjObj(
 
 object Characters {
     private var personajes: MutableList<PsjObj> = ArrayList()
+    private lateinit var pchar: PsjObj
 
-    fun getCharacters(charIds:Array<Int>, ctx: Context){
+    fun getCharacters(charIds:Array<Int>, ctx: Context, id: Int){
         val jsonFileString = getJsonDataFromAsset(ctx)
         var rid: Int
         var helper: PsjObj
@@ -60,6 +61,7 @@ object Characters {
                             "drawable", ctx.packageName)
                         helper = PsjObj(rid, psj)
                         personajes.add(helper)
+                        if(id == psj.id)pchar = helper
                         break
                     }
                 }
@@ -67,6 +69,10 @@ object Characters {
         }else{
             //Condicion para que saque a ambos de la partida; fallo la lectura del json
         }
+    }
+
+    fun getPlayerChar(): PsjObj {
+        return pchar
     }
 
     fun emptyCharsList(){
@@ -86,6 +92,28 @@ object Characters {
 
     fun getPersonajes() : MutableList<PsjObj> {
         return personajes
+    }
+
+    fun getCharacterInfo(){
+
+    }
+
+    fun checkAnswers(pregunta: Pregs){
+        when(pregunta.categoria){
+            "tez"->{if(pchar.personaje.tez == pregunta.valor){}else{}}
+            "accesorios"->{if(pchar.personaje.accesorios == pregunta.valor){}else{}}
+            "genero"->{if(pchar.personaje.genero == pregunta.valor){}else{}}
+            "colorCabello"->{if(pchar.personaje.cabello.color == pregunta.valor){}else{}}
+            "tamañoCabello"->{if(pchar.personaje.cabello.tamaño == pregunta.valor){}else{}}
+            "tipoCabello"->{if(pchar.personaje.cabello.tipo == pregunta.valor){}else{}}
+            "orejas"->{if(pchar.personaje.rostro.orejas == pregunta.valor){}else{}}
+            "nariz"->{if(pchar.personaje.rostro.nariz == pregunta.valor){}else{}}
+            "labios"->{if(pchar.personaje.rostro.labios == pregunta.valor){}else{}}
+            "colorOjos"->{if(pchar.personaje.rostro.ojos.color == pregunta.valor){}else{}}
+            "tipoOjos"->{if(pchar.personaje.rostro.ojos.tipo == pregunta.valor){}else{}}
+            "cejas"->{if(pchar.personaje.rostro.cejas == pregunta.valor){}else{}}
+            "tipoRostro"->{if(pchar.personaje.rostro.tipo == pregunta.valor){}else{}}
+        }
     }
 
 }

@@ -1,0 +1,247 @@
+[
+ {
+  "texto": "tiene tez palida?",
+  "categoria": "tez",
+  "valor": "palida"
+ },
+ {
+  "texto": "tiene tez clara?",
+  "categoria": "tez",
+  "valor": "clara"
+ },
+ {
+  "texto": "tiene tez bronceada?",
+  "categoria": "tez",
+  "valor": "bronceada"
+ },
+ {
+  "texto": "tiene tez obscura?",
+  "categoria": "tez",
+  "valor": "obscura"
+ },
+ {
+  "texto": "tiene accesorios?",
+  "categoria": "accesorios",
+  "valor": "si"
+ },
+ {
+  "texto": "es hombre?",
+  "categoria": "genero",
+  "valor": "hombre"
+ },
+ {
+  "texto": "es mujer?",
+  "categoria": "genero",
+  "valor": "mujer"
+ },
+ {
+  "texto": "tiene cabello negro?",
+  "categoria": "colorCabello",
+  "valor": "negro"
+ },
+ {
+  "texto": "tiene cabello cafe?",
+  "categoria": "colorCabello",
+  "valor": "cafe"
+ },
+ {
+  "texto": "tiene cabello blanco?",
+  "categoria": "colorCabello",
+  "valor": "blanco"
+ },
+ {
+  "texto": "tiene cabello rubio?",
+  "categoria": "colorCabello",
+  "valor": "rubio"
+ },
+ {
+  "texto": "tiene cabello pelirrojo?",
+  "categoria": "colorCabello",
+  "valor": "pelirojo"
+ },
+ {
+  "texto": "tiene cabello largo?",
+  "categoria": "tamañoCabello",
+  "valor": "largo"
+ },
+ {
+  "texto": "tiene cabello mediano?",
+  "categoria": "tamañoCabello",
+  "valor": "mediano"
+ },
+ {
+  "texto": "tiene cabello corto?",
+  "categoria": "tamañoCabello",
+  "valor": "corto"
+ },
+ {
+  "texto": "es calvo?",
+  "categoria": "tamañoCabello",
+  "valor": "calvo"
+ },
+ {
+  "texto": "tiene cabello lacio?",
+  "categoria": "tipoCabello",
+  "valor": "lacio"
+ },
+ {
+  "texto": "tiene cabello ondulado?",
+  "categoria": "tipoCabello",
+  "valor": "ondulado"
+ },
+ {
+  "texto": "tiene cabello rizado?",
+  "categoria": "tipoCabello",
+  "valor": "rizado"
+ },
+ {
+  "texto": "tiene cabello tipo afro?",
+  "categoria": "tipoCabello",
+  "valor": "afro"
+ },
+ {
+  "texto": "tiene orejas grandes?",
+  "categoria": "orejas",
+  "valor": "grandes"
+ },
+ {
+  "texto": "tiene orejas medianas?",
+  "categoria": "orejas",
+  "valor": "medianas"
+ },
+ {
+  "texto": "tiene orejas pequeñas?",
+  "categoria": "orejas",
+  "valor": "pequeñas"
+ },
+ {
+  "texto": "tiene orejas visibles?",
+  "categoria": "orejas",
+  "valor": "no visibles"
+ },
+ {
+  "texto": "tiene nariz grande?",
+  "categoria": "nariz",
+  "valor": "grande"
+ },
+ {
+  "texto": "tiene nariz mediana?",
+  "categoria": "nariz",
+  "valor": "mediana"
+ },
+ {
+  "texto": "tiene nariz pequeña?",
+  "categoria": "nariz",
+  "valor": "pequeña"
+ },
+ {
+  "texto": "tiene labios gruesos?",
+  "categoria": "labios",
+  "valor": "gruesos"
+ },
+ {
+  "texto": "tiene labios medio gruesos?",
+  "categoria": "labios",
+  "valor": "grosor medio"
+ },
+ {
+  "texto": "tiene labios delgados?",
+  "categoria": "labios",
+  "valor": "delgados"
+ },
+ {
+  "texto": "tiene ojos cafes?",
+  "categoria": "colorOjos",
+  "valor": "cafe"
+ },
+ {
+  "texto": "tiene ojos azules?",
+  "categoria": "colorOjos",
+  "valor": "azul"
+ },
+ {
+  "texto": "tiene ojos verdes?",
+  "categoria": "colorOjos",
+  "valor": "verde"
+ },
+ {
+  "texto": "tiene ojos amarillos?",
+  "categoria": "colorOjos",
+  "valor": "amarillo"
+ },
+ {
+  "texto": "tiene ojos rojos?",
+  "categoria": "colorOjos",
+  "valor": "rojo"
+ },
+ {
+  "texto": "tiene ojos negros?",
+  "categoria": "colorOjos",
+  "valor": "negro"
+ },
+ {
+  "texto": "tiene ojos blancos?",
+  "categoria": "colorOjos",
+  "valor": "blanco"
+ },
+ {
+  "texto": "tiene ojos bicolor?",
+  "categoria": "colorOjos",
+  "valor": "bicolor"
+ },
+ {
+  "texto": "tiene ojos normales?",
+  "categoria": "tipoOjos",
+  "valor": "normales"
+ },
+ {
+  "texto": "tiene ojos grandes?",
+  "categoria": "tipoOjos",
+  "valor": "grandes"
+ },
+ {
+  "texto": "tiene ojos pequeños?",
+  "categoria": "tipoOjos",
+  "valor": "pequeños"
+ },
+ {
+  "texto": "tiene los ojos ocultos?",
+  "categoria": "tipoOjos",
+  "valor": "no visibles"
+ },
+ {
+  "texto": "tiene cejas pobladas?",
+  "categoria": "cejas",
+  "valor": "pobladas"
+ },
+ {
+  "texto": "tiene cejas finas?",
+  "categoria": "cejas",
+  "valor": "finas"
+ },
+ {
+  "texto": "tiene cejas carentes?",
+  "categoria": "cejas",
+  "valor": "carentes"
+ },
+ {
+  "texto": "no tiene cejas?",
+  "categoria": "cejas",
+  "valor": "nada"
+ },
+ {
+  "texto": "tiene un rostro ancho?",
+  "categoria": "tipoRostro",
+  "valor": "ancho"
+ },
+ {
+  "texto": "tiene un rostro delgado?",
+  "categoria": "tipoRostro",
+  "valor": "delgado"
+ },
+ {
+  "texto": "tiene un rostro medio ancho?",
+  "categoria": "tipoRostro",
+  "valor": "anchura media"
+ }
+]

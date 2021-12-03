@@ -114,6 +114,11 @@ class MenuActivity : AppCompatActivity() {
                 }
             }
             session.LogoutUser()
+
+            val mIntent = Intent()
+            mIntent.action="Stop"
+            sendBroadcast(mIntent)
+
             finish()
         }
 
@@ -182,7 +187,8 @@ class MenuActivity : AppCompatActivity() {
                     //val msj = args[0] as String
                     runOnUiThread{
                         val msj = args[0]
-                        Toast.makeText(this,"Si llego este wey", Toast.LENGTH_SHORT).show()
+                        //Aqui pediente de la actualizacion de la lista de usuarios
+                        Toast.makeText(this,"Welcome", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -190,6 +196,20 @@ class MenuActivity : AppCompatActivity() {
             mSocket?.emit("new_user",user!!.get(LoginPref.KEY_USERID))
         }
 
+    }
+
+    override fun onPause(){
+        super.onPause()
+        val mIntent = Intent()
+        mIntent.action="Pause"
+        sendBroadcast(mIntent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mIntent = Intent()
+        mIntent.action="Resume"
+        sendBroadcast(mIntent)
     }
 
     fun disconnectSocket() {
