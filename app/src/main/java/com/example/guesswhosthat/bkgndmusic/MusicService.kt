@@ -22,8 +22,8 @@ class MusicService : Service() {
                 "Resume"->{onResume()}
                 "Menu"->{onChangeMusic("Sounds/bgmenu.wav")}
                 "Battle"->{onChangeMusic("Sounds/battle.mp3")}
-                "Win"->{onChangeMusic("Sounds/bgmenu.wav")}
-                "Lose"->{onChangeMusic("Sounds/bgmenu.wav")}
+                "Win"->{onChangeMusic("Sounds/win.mp3")}
+                "Lose"->{onChangeMusic("Sounds/lose.mp3")}
                 "Stop"->{onStop()}
             }
         }

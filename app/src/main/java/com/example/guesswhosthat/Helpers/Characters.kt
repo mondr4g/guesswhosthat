@@ -66,6 +66,7 @@ object Characters {
                     }
                 }
             }
+            personajes.shuffle()
         }else{
             //Condicion para que saque a ambos de la partida; fallo la lectura del json
         }
