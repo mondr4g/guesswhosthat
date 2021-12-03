@@ -208,9 +208,39 @@ class MenuActivity : AppCompatActivity() {
 
         var user_name : TextView = popupView.findViewById(R.id.user_name)
         var user_id : TextView = popupView.findViewById(R.id.user_id)
+        var user_games : TextView = popupView.findViewById(R.id.user_games)
+        var user_wins : TextView = popupView.findViewById(R.id.user_wins)
+        var user_losses : TextView = popupView.findViewById(R.id.user_losses)
 
         user_name.text = user!!.get(LoginPref.KEY_USERNAME)
         user_id.text = user!!.get(LoginPref.KEY_USERID)
+
+        if(NetworkUtil.isOnline(this)){
+            CoroutineScope(Dispatchers.IO).launch{
+                val id = user!!.get(LoginPref.KEY_USERID)
+                if(id!=null){
+                    val call = APIManager().getApiObj(this@MenuActivity).userStats(id)
+                    val body = call.body()
+                    runOnUiThread {
+                        if(call.isSuccessful){
+                            if(body!=null){
+                                var games = body.loses + body.wins
+                                user_games.text = "Games: \uD83C\uDFAE " + games.toString()
+                                user_wins.text = "Wins: \uD83C\uDFC6 " + body.wins.toString()
+                                user_losses.text = "Losses: ❌ " + body.loses.toString()
+                            }
+                        }else{
+                            try {
+                                Toast.makeText(this@MenuActivity, ErrorResponseHelper.getErrorMessage(call.errorBody()), Toast.LENGTH_LONG).show()
+                            } catch (e: Exception) {
+                                Toast.makeText(this@MenuActivity, e.message, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
 
         popupProfile = PopupWindow(popupView,w,h,focusable)
 

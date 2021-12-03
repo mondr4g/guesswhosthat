@@ -47,7 +47,15 @@ class GameActivity : AppCompatActivity() {
     private lateinit var chrono: Chronometer
 
     private lateinit var characters : Array<Int>
+
+    // Character 1vsAI
     private var bot : Int = 0
+    // Character 1vs1 Receptor
+    private var guessCharReceptor : Int = 0
+    // Character 1vs1 Emisor
+    private var guessCharEmisor : Int = 0
+    // Character getCharacters()
+    private var idChar : Int = 0
 
     private lateinit var btn_guess1vsia : Button
     private var GUESS : Boolean = false
@@ -148,6 +156,20 @@ class GameActivity : AppCompatActivity() {
 
                         //Aqui acomodar los usuarios que llegan en en el response
                         characters = gameInfo1vs1.personajes
+
+                        var id_userEmisor = user!!.get(LoginPref.KEY_USERID).toString()
+
+                        if (id_userEmisor == gameInfo1vs1.gameInfo.player1) {
+                            guessCharReceptor = gameInfo1vs1.gameInfo.character1.toInt()
+                            guessCharEmisor = gameInfo1vs1.gameInfo.character2.toInt()
+                        }
+                        else {
+                            guessCharReceptor = gameInfo1vs1.gameInfo.character2.toInt()
+                            guessCharEmisor = gameInfo1vs1.gameInfo.character1.toInt()
+                        }
+
+                        idChar = guessCharReceptor
+
                         loadCards()
                         //Aqui iniciar
                         chrono.start()
@@ -280,7 +302,7 @@ class GameActivity : AppCompatActivity() {
         chrono = findViewById(R.id.chronos)
 
         generateCharacters()
-        Characters.getCharacters(characters, applicationContext)
+        Characters.getCharacters(characters, applicationContext, idChar)
 
 
         p  = Characters.getPersonajes()
@@ -361,6 +383,7 @@ class GameActivity : AppCompatActivity() {
             Array(24) { i -> i+n1 }
 
         bot = (n1..n2).random()
+        idChar = bot
     }
 
     fun changeData(){
