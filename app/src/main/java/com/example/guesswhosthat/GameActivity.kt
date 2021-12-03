@@ -63,6 +63,9 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var popupPerson: Button
 
+    private lateinit var clueBtn: Button
+    private lateinit var popupClue: PopupWindow
+
     private lateinit var btn_guess1vsia : Button
     private var GUESS : Boolean = false
 
@@ -386,6 +389,8 @@ catch (WindowManager.BadTokenException e) {
         recView3 = findViewById(R.id.rowP3)
         recView4 = findViewById(R.id.rowP4)
 
+        clueBtn = findViewById(R.id.clue_btn)
+
         btnMusik = findViewById(R.id.btn_music1vs1)
 
         chrono = findViewById(R.id.chronos)
@@ -446,6 +451,10 @@ catch (WindowManager.BadTokenException e) {
 
         btnMusik.setOnClickListener {
             changeMusicState()
+        }
+
+        clueBtn.setOnClickListener {
+            launchCluePop()
         }
 
         chrono.setOnChronometerTickListener{
@@ -662,15 +671,79 @@ catch (WindowManager.BadTokenException e) {
         }
     }
 
+    fun launchCluePop() {
+        // Inflate layout
+        var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var popupView = inflater.inflate(R.layout.popup_clue,null)
+
+        val categSpinner: Spinner = popupView.findViewById(R.id.categ_spin)
+        val pregSpinner: Spinner = popupView.findViewById(R.id.preg_spin)
+
+        var canBut: Button = popupView.findViewById(R.id.cancel_btn)
+        var aceBut: Button = popupView.findViewById(R.id.accept_btn)
+
+        canBut.setOnClickListener {
+            popupClue.dismiss()
+        }
+
+        aceBut.setOnClickListener {
+            val pregunta = Questions.getPreResponse(pregSpinner.selectedItem.toString())
+            val flag = Characters.checkAnswers(pregunta)
+            popupClue.dismiss()
+            if(flag){
+                runOnUiThread{Toast.makeText(this@GameActivity, "Si", Toast.LENGTH_SHORT).show()}
+            }else{
+                runOnUiThread{Toast.makeText(this@GameActivity, "No", Toast.LENGTH_SHORT).show()}
+            }
+        }
+
+        val categ = Questions.getCategs()
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categ)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categSpinner.adapter = adapter
+
+        categSpinner.setSelection(0)
+
+        categSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position:Int, id: Long) {
+                val preguntas = Questions.getPreText(categSpinner.selectedItem.toString())
+                val preAdapter = ArrayAdapter(view!!.context, android.R.layout.simple_spinner_item, preguntas)
+                pregSpinner.adapter = preAdapter
+                pregSpinner.setSelection(0)
+            }
+        }
+
+        pregSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position:Int, id: Long) {
+
+            }
+        }
+
+
+        // Create popup 4 clues
+        var w : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var h : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var focusable : Boolean = true
+        popupClue = PopupWindow(popupView,w,h,focusable)
+
+        var view : LinearLayout = findViewById(R.id.boardIa)
+        popupClue.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+    }
+
     fun showPopupChat() {
         // Inflate layout
         var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         var popupView = inflater.inflate(R.layout.popup_chat,null)
 
         var recViewChat : RecyclerView = popupView.findViewById(R.id.chat)
-
-//        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-//        val currentDate = sdf.format(Date())
 
         val dataMsg =
             Array(mensajesDelWhats.history.size) { i ->  UserMsg(mensajesDelWhats.history[i].message, mensajesDelWhats.history[i].emisor, mensajesDelWhats.history[i].date) }
@@ -693,7 +766,6 @@ catch (WindowManager.BadTokenException e) {
 
         var view : LinearLayout = findViewById(R.id.board)
         popupChat.showAtLocation(view, Gravity.CENTER, 0, 0);
-        // dismiss the popup window when touched
         popupView.setOnTouchListener { v, event ->
             popupChat.dismiss()
             true

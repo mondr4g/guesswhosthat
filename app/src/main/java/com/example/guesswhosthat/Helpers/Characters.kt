@@ -2,6 +2,7 @@ package com.example.guesswhosthat.Helpers
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
@@ -99,22 +100,24 @@ object Characters {
 
     }
 
-    fun checkAnswers(pregunta: Pregs){
+    fun checkAnswers(pregunta: Pregs): Boolean{
+        var flag = false
         when(pregunta.categoria){
-            "tez"->{if(pchar.personaje.tez == pregunta.valor){}else{}}
-            "accesorios"->{if(pchar.personaje.accesorios == pregunta.valor){}else{}}
-            "genero"->{if(pchar.personaje.genero == pregunta.valor){}else{}}
-            "colorCabello"->{if(pchar.personaje.cabello.color == pregunta.valor){}else{}}
-            "tamañoCabello"->{if(pchar.personaje.cabello.tamaño == pregunta.valor){}else{}}
-            "tipoCabello"->{if(pchar.personaje.cabello.tipo == pregunta.valor){}else{}}
-            "orejas"->{if(pchar.personaje.rostro.orejas == pregunta.valor){}else{}}
-            "nariz"->{if(pchar.personaje.rostro.nariz == pregunta.valor){}else{}}
-            "labios"->{if(pchar.personaje.rostro.labios == pregunta.valor){}else{}}
-            "colorOjos"->{if(pchar.personaje.rostro.ojos.color == pregunta.valor){}else{}}
-            "tipoOjos"->{if(pchar.personaje.rostro.ojos.tipo == pregunta.valor){}else{}}
-            "cejas"->{if(pchar.personaje.rostro.cejas == pregunta.valor){}else{}}
-            "tipoRostro"->{if(pchar.personaje.rostro.tipo == pregunta.valor){}else{}}
+            "tez"->{ flag = pchar.personaje.tez == pregunta.valor }
+            "accesorios"->{ flag = pchar.personaje.accesorios == pregunta.valor }
+            "genero"->{ flag = pchar.personaje.genero == pregunta.valor }
+            "color de cabello"->{ flag = pchar.personaje.cabello.color == pregunta.valor }
+            "tamaño de cabello"->{ flag = pchar.personaje.cabello.tamaño == pregunta.valor }
+            "tipo de cabello"->{ flag = pchar.personaje.cabello.tipo == pregunta.valor }
+            "orejas"->{ flag = pchar.personaje.rostro.orejas == pregunta.valor }
+            "nariz"->{ flag = pchar.personaje.rostro.nariz == pregunta.valor }
+            "labios"->{ flag = pchar.personaje.rostro.labios == pregunta.valor }
+            "color de ojos"->{ flag = pchar.personaje.rostro.ojos.color == pregunta.valor }
+            "tipo de ojos"->{ flag = pchar.personaje.rostro.ojos.tipo == pregunta.valor }
+            "cejas"->{ flag = pchar.personaje.rostro.cejas == pregunta.valor }
+            "tipo de rostro"->{ flag = pchar.personaje.rostro.tipo == pregunta.valor }
         }
+        return flag
     }
 
 }

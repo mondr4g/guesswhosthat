@@ -36,67 +36,67 @@
  },
  {
   "texto": "tiene cabello negro?",
-  "categoria": "colorCabello",
+  "categoria": "color de cabello",
   "valor": "negro"
  },
  {
   "texto": "tiene cabello cafe?",
-  "categoria": "colorCabello",
+  "categoria": "color de cabello",
   "valor": "cafe"
  },
  {
   "texto": "tiene cabello blanco?",
-  "categoria": "colorCabello",
+  "categoria": "color de cabello",
   "valor": "blanco"
  },
  {
   "texto": "tiene cabello rubio?",
-  "categoria": "colorCabello",
+  "categoria": "color de cabello",
   "valor": "rubio"
  },
  {
   "texto": "tiene cabello pelirrojo?",
-  "categoria": "colorCabello",
+  "categoria": "color de cabello",
   "valor": "pelirojo"
  },
  {
   "texto": "tiene cabello largo?",
-  "categoria": "tamañoCabello",
+  "categoria": "tamaño de cabello",
   "valor": "largo"
  },
  {
   "texto": "tiene cabello mediano?",
-  "categoria": "tamañoCabello",
+  "categoria": "tamaño de cabello",
   "valor": "mediano"
  },
  {
   "texto": "tiene cabello corto?",
-  "categoria": "tamañoCabello",
+  "categoria": "tamaño de cabello",
   "valor": "corto"
  },
  {
   "texto": "es calvo?",
-  "categoria": "tamañoCabello",
+  "categoria": "tamaño de cabello",
   "valor": "calvo"
  },
  {
   "texto": "tiene cabello lacio?",
-  "categoria": "tipoCabello",
+  "categoria": "tipo de cabello",
   "valor": "lacio"
  },
  {
   "texto": "tiene cabello ondulado?",
-  "categoria": "tipoCabello",
+  "categoria": "tipo de cabello",
   "valor": "ondulado"
  },
  {
   "texto": "tiene cabello rizado?",
-  "categoria": "tipoCabello",
+  "categoria": "tipo de cabello",
   "valor": "rizado"
  },
  {
   "texto": "tiene cabello tipo afro?",
-  "categoria": "tipoCabello",
+  "categoria": "tipo de cabello",
   "valor": "afro"
  },
  {
@@ -151,62 +151,62 @@
  },
  {
   "texto": "tiene ojos cafes?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "cafe"
  },
  {
   "texto": "tiene ojos azules?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "azul"
  },
  {
   "texto": "tiene ojos verdes?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "verde"
  },
  {
   "texto": "tiene ojos amarillos?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "amarillo"
  },
  {
   "texto": "tiene ojos rojos?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "rojo"
  },
  {
   "texto": "tiene ojos negros?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "negro"
  },
  {
   "texto": "tiene ojos blancos?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "blanco"
  },
  {
   "texto": "tiene ojos bicolor?",
-  "categoria": "colorOjos",
+  "categoria": "color de ojos",
   "valor": "bicolor"
  },
  {
   "texto": "tiene ojos normales?",
-  "categoria": "tipoOjos",
+  "categoria": "tipo de ojos",
   "valor": "normales"
  },
  {
   "texto": "tiene ojos grandes?",
-  "categoria": "tipoOjos",
+  "categoria": "tipo de ojos",
   "valor": "grandes"
  },
  {
   "texto": "tiene ojos pequeños?",
-  "categoria": "tipoOjos",
+  "categoria": "tipo de ojos",
   "valor": "pequeños"
  },
  {
   "texto": "tiene los ojos ocultos?",
-  "categoria": "tipoOjos",
+  "categoria": "tipo de ojos",
   "valor": "no visibles"
  },
  {
@@ -231,17 +231,17 @@
  },
  {
   "texto": "tiene un rostro ancho?",
-  "categoria": "tipoRostro",
+  "categoria": "tipo de rostro",
   "valor": "ancho"
  },
  {
   "texto": "tiene un rostro delgado?",
-  "categoria": "tipoRostro",
+  "categoria": "tipo de rostro",
   "valor": "delgado"
  },
  {
   "texto": "tiene un rostro medio ancho?",
-  "categoria": "tipoRostro",
+  "categoria": "tipo de rostro",
   "valor": "anchura media"
  }
 ]

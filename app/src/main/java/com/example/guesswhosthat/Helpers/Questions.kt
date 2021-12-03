@@ -13,7 +13,7 @@ data class Pregs(
 )
 
 object Questions {
-    private var preguntas: MutableList<Pregs> = ArrayList()
+    var preguntas: MutableList<Pregs> = ArrayList()
 
     fun getPregs(ctx: Context){
         val jsonFileString = getJsonDataFromAsset(ctx)
@@ -35,5 +35,34 @@ object Questions {
             return null
         }
         return jsonString
+    }
+
+    fun getCategs(): List<String> {
+        var temp: MutableList<String> = ArrayList()
+        for (pregunta in preguntas){
+            if(!temp.contains(pregunta.categoria))
+                temp.add(pregunta.categoria)
+        }
+        return temp
+    }
+
+    fun getPreText(categoria: String): List<String>{
+        var temp: MutableList<String> = ArrayList()
+        for (pregunta in preguntas){
+            if(pregunta.categoria == categoria)
+                temp.add(pregunta.texto)
+        }
+        return temp
+    }
+
+    fun getPreResponse(texto: String): Pregs{
+        lateinit var temp: Pregs
+        for (pregunta in preguntas){
+            if(pregunta.texto == texto) {
+                temp = pregunta
+                break
+            }
+        }
+        return temp
     }
 }
