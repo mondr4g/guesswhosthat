@@ -32,6 +32,7 @@ import com.example.guesswhosthat.Models.*
 import com.example.guesswhosthat.Session.CustomWinDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -97,6 +98,9 @@ class GameActivity : AppCompatActivity() {
     //para identificar que bonon se presiono.
     private lateinit var btn_pressed: String
 
+    //pal socket
+    private var mSocket: Socket? = null
+
     companion object {
         lateinit var fa : Activity
     }
@@ -107,197 +111,37 @@ class GameActivity : AppCompatActivity() {
 
         session = LoginPref(this)
         user  = session.getUserDetails()
-        val btn_pressed = intent.getStringExtra(BTN_PRESSED)
+        btn_pressed = intent.getStringExtra(BTN_PRESSED).toString()
 
         val mIntent = Intent()
         mIntent.action="Battle"
         sendBroadcast(mIntent)
-
         when (btn_pressed) {
             "0" -> prepare1vs1()
             "1" -> prepare1vsFriends()
             "2" -> prepare1vsAI()
         }
 
-        if(!NetworkUtil.isOnline(this) || btn_pressed=="0" || btn_pressed=="0"){
-            SocketHandler.mSocket!!.on("waiting", onWaiting)
-            SocketHandler.mSocket!!.off("waiting", onWaiting)
 
-            SocketHandler.mSocket!!.on("BeginGame", onBeginGame)
-            SocketHandler.mSocket!!.off("BeginGame", onBeginGame)
-
-            SocketHandler.mSocket!!.on("win_abandono", onAbandono)
-            SocketHandler.mSocket!!.off("win_abandono", onAbandono)
-
-
-/*
-        SocketHandler.mSocket!!.on("te_vas_arrepentir"){args->
-            if(args[0]!=null){
-                this.runOnUiThread {
-                    loadingDialog.dismissDialog()
-                    finish()
-                }
-
-            }
-        }
-*/
-            /*Faltan estos 3*/
-            //Enviar respuesta de adivinacion
-            //realizar emission de evento
-
-            //cuando gana
-            SocketHandler.mSocket!!.once("you_win"){args->
-                customResultDialog.startLoadingDialog(true)
-            }
-
-            //cuando pierde
-            SocketHandler.mSocket!!.once("you_lose"){args->
-                customResultDialog.startLoadingDialog(false)
-            }
-
-
-            //enviar mensaje, va en el onclick del boton
-            //emitir evento: new_message
-            /*Enviar lo siguiente
-            data = {
-                var emisor = data.emisor
-                var receptor = data.receptor
-                var gameId = data.gameId
-                var msj = data.msj
-            }
-            * */
-
-            //recepcion de mensaje
-            SocketHandler.mSocket!!.on("message_recived", onMessageRecived)
-            SocketHandler.mSocket!!.off("message_recived", onMessageRecived)
-
-            //prueba de parametros
-            SocketHandler.mSocket!!.on("respuesta_serv", onRespuestaServ)
-            SocketHandler.mSocket!!.off("respuesta_serv", onRespuestaServ)
-
-
-        }
 
     }
-
-    var onWaiting = Emitter.Listener { args->
-        if (args[0] != null) {
-
-            this.runOnUiThread{
-                val msj = args[0] as String
-                Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
-                loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
-
-                /*try{
-                    loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
-                    Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
-                }catch (e: WindowManager.BadTokenException){
-                   Log.d(TAG, e.toString())
-                 }*/
-
-            }
-        }
+/*
+    var onWaiting = Emitter.Listener {
 
     }
 
     var onBeginGame= Emitter.Listener {
-            args->
-        if(args[0] != null){
-            this.runOnUiThread {
-                try {
-                    //Almacenar la info del juego
-                    //gameInfo1vs1  = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
-                    val type = object : TypeToken<GameBeginResponse>() {}.type
-                    gameInfo1vs1 = parseChido<GameBeginResponse>(json = args[0].toString(), typeToken = type)
-
-
-                    //Aqui acomodar los usuarios que llegan en en el response
-                    characters = gameInfo1vs1.personajes
-
-                    var id_userEmisor = user!!.get(LoginPref.KEY_USERID).toString()
-
-                    if (id_userEmisor == gameInfo1vs1.gameInfo.player1) {
-                        guessCharReceptor = gameInfo1vs1.gameInfo.character1.toInt()
-                        guessCharEmisor = gameInfo1vs1.gameInfo.character2.toInt()
-                    }
-                    else {
-                        guessCharReceptor = gameInfo1vs1.gameInfo.character2.toInt()
-                        guessCharEmisor = gameInfo1vs1.gameInfo.character1.toInt()
-                    }
-
-                    idChar = guessCharReceptor
-
-                    loadCards()
-                    //Aqui iniciar
-                    chrono.start()
-                    loadingDialog.dismissDialog()
-
-                    /*try{
-                        loadingDialog.dismissDialog()
-                    }catch (e: WindowManager.BadTokenException){
-                        Log.d(TAG, e.toString())
-                    }*/
-                    Toast.makeText(this,"El juego ha iniciado!!!!!!", Toast.LENGTH_SHORT).show()
-                }catch (e: Exception){
-                    Toast.makeText(this,"Ocurrio Un error!", Toast.LENGTH_SHORT).show()
-                    SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
-                }
-            }
-        }
     }
 
-    var onAbandono = Emitter.Listener { args->
-        if(args[0]!=null){
-            this.runOnUiThread {
-                val msj = args[0] as String
-                //loadingDialog.startLoadingDialog(msj)
-                Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
-                //Aqui realizar el avandono de la sala
-                var i : Intent = Intent(applicationContext, MenuActivity::class.java)
-                startActivity(i)
-                finish()
-            }
-        }
+    var onAbandono = Emitter.Listener {
     }
 
-    var onMessageRecived = Emitter.Listener { args->
-        if(args[0]!=null){
-            runOnUiThread {
-                try {
-                    //Almacenar la info del juego
-                    val type = object : TypeToken<ChatUpdateResponse>() {}.type
-                    mensajesDelWhats = parseChido<ChatUpdateResponse>(json = args[0].toString(), typeToken = type)
-                    showPopupChat()
-                    //mensajesDelWhats = ParseHelper.ParseGameInfo<ChatUpdateResponse>(args[0] as ResponseBody)
-                    //Aqui mostrar notificacion. o notificarle que llegaron los mensajes
-
-                }catch (e: Exception){
-                    Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+    var onMessageRecived = Emitter.Listener {
     }
 
-    var onRespuestaServ = Emitter.Listener{ args->
-        if(args[0]!=null){
-            runOnUiThread {
-                try{
-                    //AbandonoRequest
-                    val type = object : TypeToken<AbandonoResponse>() {}.type
-                    val result: AbandonoResponse = parseChido<AbandonoResponse>(json = args[0].toString(), typeToken = type)
-                    //var a = ParseHelper.ParseJsonObject<AbandonoResponse>(args[0].toString())
-                    Toast.makeText(this,result.toString(), Toast.LENGTH_SHORT).show()
-                    //Aqui lanzar el evento de que gano o lo que sea sepa la vrg
-                }catch (e: Exception){
-                    e.message?.let { Log.d("TAG", it) }
-
-                    Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-        }
+    var onRespuestaServ = Emitter.Listener{
     }
-
+*/
 
     var loadingDialog : LoadingDialog = LoadingDialog(this)
     var customResultDialog: CustomWinDialog = CustomWinDialog(this)
@@ -310,6 +154,186 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_board1vs1)
 
         fa = this
+
+        /*
+      * try {
+      alertDialog.show()
+  }
+catch (WindowManager.BadTokenException e) {
+      //use a log message
+  }
+      * */
+        //SocketHandler.mSocket!!.on("waiting", onWaiting)
+        //SocketHandler.mSocket!!.off("waiting")
+
+        SocketHandler.mSocket!!.on("waiting"){ args->
+            if (args[0] != null) {
+
+                runOnUiThread{
+                    val msj = args[0] as String
+                    Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
+                    loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
+
+                    /*try{
+                        loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
+                        Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
+                    }catch (e: WindowManager.BadTokenException){
+                       Log.d(TAG, e.toString())
+                     }*/
+
+                }
+            }
+        }
+
+        //SocketHandler.mSocket!!.on("BeginGame", onBeginGame)
+        //SocketHandler.mSocket!!.off("BeginGame")
+        SocketHandler.mSocket!!.on("BeginGame"){ args->
+            if(args[0] != null){
+                runOnUiThread {
+                    try {
+                        //Almacenar la info del juego
+                        //gameInfo1vs1  = ParseHelper.ParseGameInfo<GameBeginResponse>(args[0] as ResponseBody)
+                        val type = object : TypeToken<GameBeginResponse>() {}.type
+                        gameInfo1vs1 = parseChido<GameBeginResponse>(json = args[0].toString(), typeToken = type)
+
+
+                        //Aqui acomodar los usuarios que llegan en en el response
+                        characters = gameInfo1vs1.personajes
+
+                        var id_userEmisor = user!!.get(LoginPref.KEY_USERID).toString()
+
+                        if (id_userEmisor == gameInfo1vs1.gameInfo.player1) {
+                            guessCharReceptor = gameInfo1vs1.gameInfo.character1.toInt()
+                            guessCharEmisor = gameInfo1vs1.gameInfo.character2.toInt()
+                        }
+                        else {
+                            guessCharReceptor = gameInfo1vs1.gameInfo.character2.toInt()
+                            guessCharEmisor = gameInfo1vs1.gameInfo.character1.toInt()
+                        }
+
+                        idChar = guessCharReceptor
+
+                        loadCards()
+                        //Aqui iniciar
+                        chrono.start()
+                        loadingDialog.dismissDialog()
+
+                        /*try{
+                            loadingDialog.dismissDialog()
+                        }catch (e: WindowManager.BadTokenException){
+                            Log.d(TAG, e.toString())
+                        }*/
+                        Toast.makeText(this,"El juego ha iniciado!!!!!!", Toast.LENGTH_SHORT).show()
+                    }catch (e: Exception){
+                        Toast.makeText(this,"Ocurrio Un error!", Toast.LENGTH_SHORT).show()
+                        SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
+                    }
+                }
+            }
+        }
+
+        //SocketHandler.mSocket!!.on("win_abandono", onAbandono)
+        //SocketHandler.mSocket!!.off("win_abandono", onAbandono)
+        SocketHandler.mSocket!!.on("win_abandono"){args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    val msj = args[0] as String
+                    //loadingDialog.startLoadingDialog(msj)
+                    Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
+                    //Aqui realizar el avandono de la sala
+                    var i : Intent = Intent(applicationContext, MenuActivity::class.java)
+                    startActivity(i)
+                    finish()
+                }
+            }
+
+        }
+
+/*
+        SocketHandler.mSocket!!.on("te_vas_arrepentir"){args->
+            if(args[0]!=null){
+                this.runOnUiThread {
+                    loadingDialog.dismissDialog()
+                    finish()
+                }
+
+            }
+        }
+*/
+        /*Faltan estos 3*/
+        //Enviar respuesta de adivinacion
+        //realizar emission de evento
+
+        //cuando gana
+        SocketHandler.mSocket!!.once("you_win"){args->
+            customResultDialog.startLoadingDialog(true)
+        }
+
+        //cuando pierde
+        SocketHandler.mSocket!!.once("you_lose"){args->
+            customResultDialog.startLoadingDialog(false)
+        }
+
+
+        //enviar mensaje, va en el onclick del boton
+        //emitir evento: new_message
+        /*Enviar lo siguiente
+        data = {
+            var emisor = data.emisor
+            var receptor = data.receptor
+            var gameId = data.gameId
+            var msj = data.msj
+        }
+        * */
+
+        //recepcion de mensaje
+        //SocketHandler.mSocket!!.on("message_recived", onMessageRecived)
+        //SocketHandler.mSocket!!.off("message_recived", onMessageRecived)
+
+        SocketHandler.mSocket!!.on("message_recived"){args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    try {
+                        //Almacenar la info del juego
+                        val type = object : TypeToken<ChatUpdateResponse>() {}.type
+                        mensajesDelWhats = parseChido<ChatUpdateResponse>(json = args[0].toString(), typeToken = type)
+                        showPopupChat()
+                        //mensajesDelWhats = ParseHelper.ParseGameInfo<ChatUpdateResponse>(args[0] as ResponseBody)
+                        //Aqui mostrar notificacion. o notificarle que llegaron los mensajes
+
+                    }catch (e: Exception){
+                        Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        }
+
+
+        //prueba de parametros
+        //SocketHandler.mSocket!!.on("respuesta_serv", onRespuestaServ)
+        //SocketHandler.mSocket!!.off("respuesta_serv", onRespuestaServ)
+        SocketHandler.mSocket!!.on("respuesta_serv"){ args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    try{
+                        //AbandonoRequest
+                        val type = object : TypeToken<AbandonoResponse>() {}.type
+                        val result: AbandonoResponse = parseChido<AbandonoResponse>(json = args[0].toString(), typeToken = type)
+                        //var a = ParseHelper.ParseJsonObject<AbandonoResponse>(args[0].toString())
+                        Toast.makeText(this,result.toString(), Toast.LENGTH_SHORT).show()
+                        //Aqui lanzar el evento de que gano o lo que sea sepa la vrg
+                    }catch (e: Exception){
+                        e.message?.let { Log.d("TAG", it) }
+
+                        Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+        }
+
+        mSocket?.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
         btn_sendMsg = findViewById(R.id.send_msg)
 
@@ -336,18 +360,7 @@ class GameActivity : AppCompatActivity() {
             sendMessage()
         }
 
-        /*
-        * try {
-        alertDialog.show()
-    }
-catch (WindowManager.BadTokenException e) {
-        //use a log message
-    }
-        * */
 
-
-
-        SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
 
         btn_sendMsg.setOnClickListener {
             showPopupChat()

@@ -35,8 +35,7 @@ class LoadingDialog {
             val mIntent = Intent()
             mIntent.action="Menu"
             MenuActivity.fa.sendBroadcast(mIntent)
-            // Terminar Game
-            GameActivity.fa.finish()
+
         }
 
         view.findViewById<TextView>(R.id.txtDialogMsj).text = msj
