@@ -52,6 +52,8 @@ class GameActivity : AppCompatActivity() {
     private lateinit var characters : Array<Int>
     private var bot : Int = 0
 
+    private lateinit var popupPerson: Button
+
     private lateinit var btn_guess1vsia : Button
     private var GUESS : Boolean = false
 
@@ -60,6 +62,7 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var btn_sendMsg : Button
     private lateinit var popupChat : PopupWindow
+    private lateinit var popupChar : PopupWindow
     private lateinit var message : EditText
 
     //Loin preferences
@@ -118,6 +121,9 @@ class GameActivity : AppCompatActivity() {
         fa = this
 
         btn_sendMsg = findViewById(R.id.send_msg)
+
+        popupPerson = findViewById(R.id.btn_poperson)
+        popupPerson.setOnClickListener { showPopupInfo() }
 
         message = findViewById(R.id.chat_1vs1)
 
@@ -274,6 +280,9 @@ class GameActivity : AppCompatActivity() {
         }
         chrono.start()
 
+        popupPerson = findViewById(R.id.btn_poperson)
+        popupPerson.setOnClickListener { showPopupInfo() }
+
     }
 
     fun prepare1vsAI() {
@@ -302,6 +311,7 @@ class GameActivity : AppCompatActivity() {
         Questions.getPregs(applicationContext)
         Characters.getCharacters(characters, applicationContext, bot)
         generateCharacters()
+
 
 
         p  = Characters.getPersonajes()
@@ -490,6 +500,59 @@ class GameActivity : AppCompatActivity() {
         SocketHandler.mSocket!!.emit("new_message",dataa)
     }
 
+    fun showPopupInfo(){
+        // Inflate layout
+        var inflater : LayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var popupView = inflater.inflate(R.layout.popup_character,null)
+
+        val pic: ImageView = popupView.findViewById(R.id.char_pic)
+        val name: TextView = popupView.findViewById(R.id.pop_name)
+        val gend: TextView = popupView.findViewById(R.id.pop_gen)
+        val skin: TextView = popupView.findViewById(R.id.pop_tez)
+        val acce: TextView = popupView.findViewById(R.id.pop_acc)
+        val hcol: TextView = popupView.findViewById(R.id.pop_hairCol)
+        val hsiz: TextView = popupView.findViewById(R.id.pop_hairSiz)
+        val htpe: TextView = popupView.findViewById(R.id.pop_hairTpe)
+        val ears: TextView = popupView.findViewById(R.id.pop_ears)
+        val nose: TextView = popupView.findViewById(R.id.pop_nose)
+        val lips: TextView = popupView.findViewById(R.id.pop_lips)
+        val ecol: TextView = popupView.findViewById(R.id.pop_eyeCol)
+        val etpe: TextView = popupView.findViewById(R.id.pop_eyeTpe)
+        val brow: TextView = popupView.findViewById(R.id.pop_brows)
+        val face: TextView = popupView.findViewById(R.id.pop_faceTpe)
+
+        val player = Characters.getPlayerChar()
+
+        pic.setImageResource(player.resourceId)
+        name.text = player.personaje.nombre
+        gend.text = "Genero: " + player.personaje.genero
+        skin.text = "Tez: " + player.personaje.tez
+        acce.text = "Accesorios: " + player.personaje.accesorios
+        hcol.text = "Color de cabello: " + player.personaje.cabello.color
+        hsiz.text = "Tamaño de cabello: " + player.personaje.cabello.tamaño
+        htpe.text = "Tipo de cabello: " + player.personaje.cabello.tipo
+        ears.text = "Orejas: " + player.personaje.rostro.orejas
+        nose.text = "Tipo de nariz: " + player.personaje.rostro.nariz
+        lips.text = "Tipo de labios: " + player.personaje.rostro.labios
+        ecol.text = "Color de ojos: " + player.personaje.rostro.ojos.color
+        etpe.text = "Ojos: " + player.personaje.rostro.ojos.tipo
+        brow.text = "Cejas: " + player.personaje.rostro.cejas
+        face.text = "Tipo de rostro: " + player.personaje.rostro.tipo
+
+        // Create popup
+        var w : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var h : Int = LinearLayout.LayoutParams.WRAP_CONTENT
+        var focusable : Boolean = true
+        popupChar = PopupWindow(popupView,w,h,focusable)
+
+        var view : LinearLayout = findViewById(R.id.board)
+        popupChar.showAtLocation(view, Gravity.CENTER, 0, 0);
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener { v, event ->
+            popupChar.dismiss()
+            true
+        }
+    }
 
     fun showPopupChat() {
         // Inflate layout

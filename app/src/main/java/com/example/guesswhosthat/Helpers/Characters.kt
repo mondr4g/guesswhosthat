@@ -71,6 +71,10 @@ object Characters {
         }
     }
 
+    fun getPlayerChar(): PsjObj {
+        return pchar
+    }
+
     fun emptyCharsList(){
         personajes.clear()
     }

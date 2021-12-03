@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GWT?</string>
     <string name="drackode">drackode ©</string>
+    <string name="placeholder">placeholder</string>
 </resources>
