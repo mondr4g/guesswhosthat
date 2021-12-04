@@ -102,6 +102,7 @@ class GameActivity : AppCompatActivity() {
 
     // Personaje a adivinar
     private lateinit var adivinarChar : PsjObj
+    private lateinit var adivinaChar2 : PsjObj
 
     companion object {
         lateinit var fa : Activity
@@ -176,7 +177,6 @@ catch (WindowManager.BadTokenException e) {
                     val msj = args[0] as String
                     Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
                     loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
-
                     /*try{
                         loadingDialog.startLoadingDialog(msj, user!!.get(LoginPref.KEY_USERID).toString())
                         Toast.makeText(this,msj, Toast.LENGTH_SHORT).show()
@@ -220,13 +220,28 @@ catch (WindowManager.BadTokenException e) {
                         //Aqui iniciar
                         chrono.start()
                         loadingDialog.dismissDialog()
-
                         /*try{
                             loadingDialog.dismissDialog()
                         }catch (e: WindowManager.BadTokenException){
                             Log.d(TAG, e.toString())
                         }*/
                         Toast.makeText(this,"El juego ha iniciado!!!!!!", Toast.LENGTH_SHORT).show()
+
+                        btn_guess1vsia = findViewById(R.id.btn_adivina1vs1)
+
+                        btn_guess1vsia.setOnClickListener {
+                            GUESS = true
+                        }
+
+                        for (c in p) {
+                            if (c.personaje.id == guessCharEmisor) {
+                                adivinarChar = c
+                                Toast.makeText(applicationContext, "Te encontre" + adivinarChar.personaje.nombre, Toast.LENGTH_SHORT).show()
+                            }
+                            else if (c.personaje.id == guessCharReceptor) {
+                                adivinaChar2 = c
+                            }
+                        }
                     }catch (e: Exception){
                         Toast.makeText(this,"Ocurrio Un error!", Toast.LENGTH_SHORT).show()
                         SocketHandler.mSocket!!.emit("new_game",user!!.get(LoginPref.KEY_USERID))
@@ -247,6 +262,24 @@ catch (WindowManager.BadTokenException e) {
                     var i : Intent = Intent(applicationContext, MenuActivity::class.java)
                     startActivity(i)
                     finish()
+                }
+            }
+
+        }
+
+        SocketHandler.mSocket!!.on("win"){args->
+            if(args[0]!=null){
+                runOnUiThread {
+                    try{
+                        Toast.makeText(this,args[0].toString(), Toast.LENGTH_SHORT).show()
+                        finish()
+                        //Aqui lanzar el evento de que gano o lo que sea sepa la vrg
+                    }catch (e: Exception){
+                        e.message?.let { Log.d("TAG", it) }
+
+                        Toast.makeText(this,"No se han podido cargar los mensajes!", Toast.LENGTH_SHORT).show()
+
+                    }
                 }
             }
 
@@ -362,12 +395,6 @@ catch (WindowManager.BadTokenException e) {
         btn_sendMsg.setOnClickListener {
             sendMessage()
         }
-
-
-
-        btn_sendMsg.setOnClickListener {
-            showPopupChat()
-        }
     }
 
     fun prepare1vsFriends() {
@@ -456,11 +483,31 @@ catch (WindowManager.BadTokenException e) {
                 if (it.name == adivinarChar.personaje.nombre) {
                     Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
                     GUESS = false
-                }
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Ganaste")
+                        .setMessage("Felicidades")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()                }
                 else {
                     Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
                     GUESS = false
-                }
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Perdiste")
+                        .setMessage("Suerte chaval")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()                }
             }
         }
 
@@ -470,10 +517,33 @@ catch (WindowManager.BadTokenException e) {
                 if (it.name == adivinarChar.personaje.nombre) {
                     Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Ganaste")
+                        .setMessage("Felicidades")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
                 else {
                     Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Perdiste")
+                        .setMessage("Suerte chaval")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
             }
         }
@@ -484,10 +554,32 @@ catch (WindowManager.BadTokenException e) {
                 if (it.name == adivinarChar.personaje.nombre) {
                     Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Ganaste")
+                        .setMessage("Felicidades")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
                 else {
                     Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Perdiste")
+                        .setMessage("Suerte chaval")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
             }
         }
@@ -498,10 +590,32 @@ catch (WindowManager.BadTokenException e) {
                 if (it.name == adivinarChar.personaje.nombre) {
                     Toast.makeText(applicationContext, "Ganaste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Ganaste")
+                        .setMessage("Felicidades")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
                 else {
                     Toast.makeText(applicationContext, "Perdiste", Toast.LENGTH_SHORT).show()
                     GUESS = false
+                    val dialog = AlertDialog.Builder(this)
+                        .setTitle("Perdiste")
+                        .setMessage("Suerte Chaval")
+                        .setNegativeButton("") { view, _ ->
+                        }
+                        .setPositiveButton("Accept") { view, _ ->
+                            finish()
+                        }
+                        .setCancelable(false)
+                        .create()
+                    dialog.show()
                 }
             }
         }
@@ -683,14 +797,14 @@ catch (WindowManager.BadTokenException e) {
             id_recptor = getOppositeId()
             id_game = gameInfo1vs1.gameInfo.id
         }
-        var datMessage = NewMessageRequest(
+        var datMessage = NewMessageRequest (
             emisor = id_emisor,
             receptor = id_recptor,
             gameId = id_game,
             msj = mensaje
         )
 
-        val dataa = Json.encodeToString(datMessage)
+        val dataa = Json.encodeToJsonElement(datMessage)
         SocketHandler.mSocket!!.emit("new_message",dataa)
     }
 
@@ -715,7 +829,12 @@ catch (WindowManager.BadTokenException e) {
         val brow: TextView = popupView.findViewById(R.id.pop_brows)
         val face: TextView = popupView.findViewById(R.id.pop_faceTpe)
 
-        val player = Characters.getPlayerChar()
+        val player : PsjObj
+
+        if(btn_pressed == "2")
+            player = Characters.getPlayerChar()
+        else
+            player = adivinaChar2
 
         pic.setImageResource(player.resourceId)
         name.text = player.personaje.nombre

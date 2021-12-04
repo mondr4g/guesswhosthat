@@ -39,7 +39,7 @@ class LoadingDialog {
 
         view.findViewById<TextView>(R.id.txtDialogMsj).text = msj
         builder.setView(view)
-        builder.setCancelable(true)
+        builder.setCancelable(false)
         dialog = builder.create()
         dialog.show()
     }
